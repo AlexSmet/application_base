@@ -155,4 +155,4 @@ MaterialApp.router(
 )
 ```
 
-All screen and tab changes will be auto-logging via `NavigatorObserverPro`
+All screen and tab changes will be auto-loggied via `NavigatorObserverPro`
