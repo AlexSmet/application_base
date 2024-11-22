@@ -6,7 +6,7 @@ import 'package:logger/logger.dart';
 String loggerUserId = '';
 
 ///
-void Function({required String information})? logInformationRemote;
+void Function({required String information})? logInfoRemote;
 
 ///
 void Function({required String error, StackTrace? stack})? logErrorRemote;
@@ -29,7 +29,7 @@ final Logger _localPureLogger = Logger(
 );
 
 /// Logging some information
-void logInformation({
+void logInfo({
   required String info,
   String? additional,
 }) {
@@ -46,7 +46,7 @@ void logInformation({
     // ignore: avoid_print
     if (isWeb) print(message);
   }
-  logInformationRemote?.call(information: message);
+  logInfoRemote?.call(information: message);
 }
 
 /// Logging some error
@@ -80,5 +80,5 @@ void logScreenChanged({
   String message = 'Screen changed: ${navigatorTransactionString(transaction)}';
   if (from != null) message += ' from $from';
   if (to != null) message += ' to $to';
-  logInformation(info: message);
+  logInfo(info: message);
 }
