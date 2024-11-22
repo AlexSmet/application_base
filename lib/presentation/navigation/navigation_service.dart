@@ -25,7 +25,7 @@ BuildContext? get actualContext {
 /// Removes the focus on this node by moving the primary focus to another node
 void unfocus() => FocusManager.instance.primaryFocus?.unfocus();
 
-///
+/// Pop all routes and push default '/' route
 void openDefaultScreen() => router
   ..popUntilRoot()
   ..replaceNamed('/');

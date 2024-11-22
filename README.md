@@ -176,4 +176,90 @@ MaterialApp.router(
 )
 ```
 
+Now you can use popular navigation functions directly from 
+`navigation_service.dart`:
+
+```dart
+/// Pop all routes and push default '/' route
+void openDefaultScreen();
+
+/// Adds a new entry to the screens stack
+Future<void> pushScreen({required PageRouteInfo<dynamic> route});
+
+/// Pops the last screen unless stack has one entry
+Future<void> popScreen({bool? result});
+
+/// Pop current route regardless if it's the last route in stack
+/// or the result of it's
+void popScreenForced({bool? result});
+
+/// Keeps popping routes until route with provided path is found
+void popUntilScreenWithName({required String routeName});
+
+/// Pops until provided route, if it already exists in stack
+/// else adds it to the stack (good for web Apps)
+void navigateScreen({required PageRouteInfo<dynamic> route});
+
+/// Removes last entry in stack and pushes provided route.
+/// if last entry == provided route screen will just be updated
+Future<void> replaceScreen({required PageRouteInfo<dynamic> route});
+
+/// This's like providing a completely new stack as it rebuilds the stack
+/// with the passed route.
+/// Entry might just update if already exist
+void replaceAllScreen({required PageRouteInfo<dynamic> route});
+```
+
+Also you've got special function for unfocus and getters for actual context
+and router:
+
+```dart
+/// Router for direct usage of full auto_route functionality
+RootStackRouter router;
+
+/// Actual context for everywhere accessibility
+BuildContext? actualContext;
+
+/// Removes the focus on this node by moving the primary focus to another node
+void unfocus();
+```
+
 All screen and tab changes will be auto-loggied via `NavigatorObserverPro`
+
+Navigator check screens accessibility automacically via `AuthenticationGuard` 
+and `AccessVM`. For it you need to create `AuthenticationGuard` and add it
+in `routes`:
+
+```dart
+import 'package:application_base/presentation/navigation/guard/authentication_guard.dart';
+import 'package:auto_route/auto_route.dart';
+
+class RouterPro extends RootStackRouter {
+  ///
+  RouterPro({
+    required this.authenticationGuard,
+    super.navigatorKey,
+  });
+
+  ///
+  final AuthenticationGuard authenticationGuard;
+
+  ///
+  @override
+  List<AutoRoute> get routes => [
+        /// Authorization screen - accessible without authorization
+        AdaptiveRoute<void>(
+          path: 'authorization',
+          page: AuthorizationRoute.page,
+        ),
+
+        /// Main screen - authorization required
+        AdaptiveRoute<void>(
+          initial: true,
+          path: '/',
+          page: MainRoute.page,
+          guards: [authenticationGuard], // <--
+        ),
+  ];
+}
+```
