@@ -85,9 +85,16 @@ void setUser() {
 }
 ```
 
+And use logger everywhere it need
+
+```dart
+logInfo(info: 'Interesting information');
+logError(error: 'Some error happened');
+```
+
 ## Navigation utilities
 
-Based of [AutoRoute](https://pub.dev/packages/auto_route)
+Based on [AutoRoute](https://pub.dev/packages/auto_route)
 
 On application preparing `RootStackRouter` based on `navigatorKey` must be 
 created and set as `router`:
@@ -147,3 +154,5 @@ MaterialApp.router(
     /// ...
 )
 ```
+
+All screen and tab changes will be auto-logging via `NavigatorObserverPro`
