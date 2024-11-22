@@ -224,7 +224,7 @@ BuildContext? actualContext;
 void unfocus();
 ```
 
-All screen and tab changes will be auto-loggied via `NavigatorObserverPro`
+Every screen and tab changes will be auto-loggied via `NavigatorObserverPro`
 
 Navigator check screens accessibility automacically via `AuthenticationGuard` 
 and `AccessVM`. For it you need to create `AuthenticationGuard` and add it
@@ -261,5 +261,40 @@ class RouterPro extends RootStackRouter {
           guards: [authenticationGuard], // <--
         ),
   ];
+}
+```
+
+Then you can **grant** or **revoke** access anytime:
+
+```dart
+import 'package:application_base/core/service/service_locator.dart';
+import 'package:application_base/presentation/view_model/access_vm.dart';
+
+///
+void login(){
+    /// ... Do some login stuff ...
+
+    /// Now grant an access
+    getIt<AccessVM>().grantAccess();
+
+    /// And pop for making magic
+    popScreenForced();
+}
+
+///
+void logout(){
+    /// ... Do some logout stuff ...
+
+    /// Now revoke access
+    getIt<AccessVM>().revokeAccess();
+
+    /// And that's all, navigator will open authorization route automatically
+    /// and return to previously screen on successfully access restore
+
+    /// If you don't need to return to previously screen, you can do next:    
+    getIt<AccessVM>().revokeAccess(needNotify: false);
+
+    /// In that case navigator will open default screen on successfully access 
+    /// restore
 }
 ```
