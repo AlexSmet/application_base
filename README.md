@@ -101,7 +101,7 @@ import 'package:application_base/presentation/navigation/navigation_service.dart
 ///
 final routerInstance = RouterPro(
   authenticationGuard: AuthenticationGuard(
-    authorizationRoute: const AuthRoute(),
+    authorizationRoute: const AuthRoute(),// Your default non-authorized route
   ),
   navigatorKey: navigatorKey,
 );
@@ -109,10 +109,41 @@ final routerInstance = RouterPro(
 
 2. Set created instance as `router`
 
-```dart
-/// Somewhere on application launching
-router = routerInstance;
+Somewhere on application launching
 
-/// Or set it directrly on package prepare flow
+```dart
+import 'package:application_base/presentation/navigation/navigation_service.dart';
+
+router = routerInstance;
+```
+
+Or set it directrly on package prepare flow
+
+```dart
+import 'package:application_base/application_base.dart';
+
 ApplicationBase.prepare(routerInstance: routerInstance);
+```
+
+3. Also you can create `routerConfig` with existing `Access checker` and 
+`Observer`:
+
+```dart
+///
+final RouterConfig<UrlState> routerConfig = routerInstance.config(
+    reevaluateListenable: getIt<AccessVM>(),
+    navigatorObservers: () => [
+        NavigatorObserverPro(),
+    ],
+);
+```
+
+and use it as Application `routerConfig`
+
+```dart
+MaterialApp.router(
+    /// ...
+    routerConfig: routerConfig,
+    /// ...
+)
 ```
