@@ -16,8 +16,8 @@ Unified base for Flutter applications based on [special architecture](https://mi
 ## Features
 
 For now includes:
-* Analysis options
-* Logger base on [Logger](https://pub.dev/packages/logger)
+* [Analysis options](#analysis-options)
+* [Logger](#logger)
 
 ## Analysis options
 
@@ -48,14 +48,9 @@ Example `analysis_options.yaml` file:
 include: package:application_base/analysis_options.yaml
 ```
 
-## Usage
+## Logger
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
-```
+Based on [Logger](https://pub.dev/packages/logger)
 
 ## Additional information
 
