@@ -17,6 +17,7 @@ Unified base for Flutter applications based on [special architecture](https://mi
 
 For now includes:
 * [Analysis options](#analysis-options)
+* [GetIt](#getit)
 * [Logger](#logger)
 * [Navigation utilities](#navigation-utilities)
 
@@ -52,6 +53,26 @@ Example `analysis_options.yaml` file:
 # To apply the changes run
 # dart fix --apply
 include: package:application_base/analysis_options.yaml
+```
+
+## GetIt
+
+Based on [get_it](https://pub.dev/packages/get_it)
+
+1. Prepare GetIt:
+
+```dart
+import 'package:application_base/core/service/service_locator.dart';
+
+getIt.registerLazySingleton<AwesomeService>(AwesomeService.new);
+```
+
+2. And use it:
+
+```dart
+import 'package:application_base/core/service/service_locator.dart';
+
+getIt<AwesomeService>().makeMagic();
 ```
 
 ## Logger
