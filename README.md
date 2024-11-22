@@ -51,9 +51,3 @@ include: package:application_base/analysis_options.yaml
 ## Logger
 
 Based on [Logger](https://pub.dev/packages/logger)
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
