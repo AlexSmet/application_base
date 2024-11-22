@@ -226,7 +226,7 @@ void unfocus();
 
 Every screen and tab changes will be auto-loggied via `NavigatorObserverPro`
 
-Navigator check screens accessibility automacically via `AuthenticationGuard` 
+Navigator check screens accessibility automatically via `AuthenticationGuard` 
 and `AccessVM`. For it you need to create `AuthenticationGuard` and add it
 in `routes`:
 
@@ -264,7 +264,7 @@ class RouterPro extends RootStackRouter {
 }
 ```
 
-Then you can **grant** or **revoke** access anytime:
+Now you can **grant** or **revoke** access anytime:
 
 ```dart
 import 'package:application_base/core/service/service_locator.dart';
