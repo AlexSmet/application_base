@@ -9,7 +9,7 @@ String loggerUserId = '';
 void Function({required String information})? logInfoRemote;
 
 ///
-void Function({required String error, StackTrace? stack})? logErrorRemote;
+void Function({required String error})? logErrorRemote;
 
 /// Local logger for beauty output info in console
 final Logger _localLogger = Logger(
@@ -61,7 +61,8 @@ void logError({
   /// Logging local only in debug mode
   if (isDebug) {
     /// Current user information
-    message += '\nUser: $loggerUserId';
+    if (loggerUserId.isNotEmpty) message += '\nUser: $loggerUserId';
+
     _localLogger.e(message);
 
     /// For logging in browser console on Web

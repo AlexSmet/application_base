@@ -1,4 +1,9 @@
-/// Unified base for Flutter applications
-library application_base;
+import 'package:application_base/core/service/service_locator.dart';
 
-export 'package:application_base/core/core.dart';
+abstract final class ApplicationBase {
+  ///
+  static Future<void> prepare() async {
+    /// Setup service locator
+    ServiceLocatorBase.prepare();
+  }
+}

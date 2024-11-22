@@ -18,6 +18,11 @@ Unified base for Flutter applications based on [special architecture](https://mi
 For now includes:
 * [Analysis options](#analysis-options)
 * [Logger](#logger)
+* [Navigation utilities](#navigation-utilities)
+
+## Usage
+
+TODO: init example
 
 ## Analysis options
 
@@ -51,3 +56,43 @@ include: package:application_base/analysis_options.yaml
 ## Logger
 
 Based on [Logger](https://pub.dev/packages/logger)
+
+For logging in remote systems (such as Crashlytics, Sentry or smth else) just
+set `logInfoRemote` and `logErrorRemote`:
+
+```dart
+///
+void _logInfo({required String information}) => 
+    SomeRemoteService.log(information);
+///
+void _logError({required String error}) => 
+    SomeRemoteService.log(error);
+
+void prepare(){
+    logInfoRemote = _logInfo;
+    logErrorRemote = _logError;
+}
+```
+
+Also you can set User ID for local error logging:
+
+```dart
+///
+void setUser() {
+    /// Set user in logger
+    loggerUserId = userId;
+}
+```
+
+## Navigation utilities
+
+Based of [AutoRoute](https://pub.dev/packages/auto_route)
+
+On application preparing `RootStackRouter` based on `navigatorKey` must be 
+created and set as `router`
+
+TODO: init example
+
+```dart
+///
+```

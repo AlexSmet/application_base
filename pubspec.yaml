@@ -8,10 +8,17 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  # https://pub.dev/packages/auto_route
+  # All platform supported
+  auto_route: ^9.2.2
+
   # Base SDK
   flutter:
     sdk: flutter
 
+  # https://pub.dev/packages/get_it
+  get_it: ^8.0.2
+  
   # https://pub.dev/packages/logger
   # All platform supported
   logger: ^2.5.0
