@@ -22,7 +22,8 @@ For now includes:
 
 ## Usage
 
-TODO: init example
+Just call `ApplicationBase.prepare();` on application  launching to initialize
+all necessary data.
 
 ## Analysis options
 
@@ -89,10 +90,29 @@ void setUser() {
 Based of [AutoRoute](https://pub.dev/packages/auto_route)
 
 On application preparing `RootStackRouter` based on `navigatorKey` must be 
-created and set as `router`
+created and set as `router`:
 
-TODO: init example
+1. Create router instance
 
 ```dart
+import 'package:application_base/presentation/navigation/guard/authentication_guard.dart';
+import 'package:application_base/presentation/navigation/navigation_service.dart';
+
 ///
+final routerInstance = RouterPro(
+  authenticationGuard: AuthenticationGuard(
+    authorizationRoute: const AuthRoute(),
+  ),
+  navigatorKey: navigatorKey,
+);
+```
+
+2. Set created instance as `router`
+
+```dart
+/// Somewhere on application launching
+router = routerInstance;
+
+/// Or set it directrly on package prepare flow
+ApplicationBase.prepare(routerInstance: routerInstance);
 ```

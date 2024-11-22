@@ -9,10 +9,7 @@ final _navigatorKey = GlobalKey<NavigatorState>();
 GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
 /// Main application router
-late RootStackRouter _router;
-
-/// Main application router
-set router(RootStackRouter newValue) => _router = newValue;
+late RootStackRouter router;
 
 /// Current context getter
 ///
@@ -29,38 +26,38 @@ BuildContext? get actualContext {
 void unfocus() => FocusManager.instance.primaryFocus?.unfocus();
 
 ///
-void openDefaultScreen() => _router
+void openDefaultScreen() => router
   ..popUntilRoot()
   ..replaceNamed('/');
 
 /// Adds a new entry to the screens stack
 /// Can not return some value because of Future<smth> doesn't work with await...
 Future<void> pushScreen({required PageRouteInfo<dynamic> route}) =>
-    _router.push(route);
+    router.push(route);
 
 /// Pops the last screen unless stack has one entry
-Future<void> popScreen({bool? result}) => _router.maybePop(result);
+Future<void> popScreen({bool? result}) => router.maybePop(result);
 
 /// Pop current route regardless if it's the last route in stack
 /// or the result of it's
-void popScreenForced({bool? result}) => _router.popForced(result);
+void popScreenForced({bool? result}) => router.popForced(result);
 
 /// Keeps popping routes until route with provided path is found
 void popUntilScreenWithName({required String routeName}) =>
-    _router.popUntilRouteWithName(routeName);
+    router.popUntilRouteWithName(routeName);
 
 /// Pops until provided route, if it already exists in stack
 /// else adds it to the stack (good for web Apps)
 void navigateScreen({required PageRouteInfo<dynamic> route}) =>
-    _router.navigate(route);
+    router.navigate(route);
 
 /// Removes last entry in stack and pushes provided route.
 /// if last entry == provided route screen will just be updated
 Future<void> replaceScreen({required PageRouteInfo<dynamic> route}) =>
-    _router.replace(route);
+    router.replace(route);
 
 /// This's like providing a completely new stack as it rebuilds the stack
 /// with the passed route.
 /// Entry might just update if already exist
 void replaceAllScreen({required PageRouteInfo<dynamic> route}) =>
-    _router.replaceAll([route]);
+    router.replaceAll([route]);
