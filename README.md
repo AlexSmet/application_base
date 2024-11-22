@@ -19,10 +19,34 @@ For now includes:
 * Analysis options
 * Logger base on [Logger](https://pub.dev/packages/logger)
 
-## Getting started
+## Analysis options
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Create an `analysis_options.yaml` file at the root of the package (alongside 
+the `pubspec.yaml` file) and `include: application_base/analysis_options.yaml` 
+from it.
+
+Example `analysis_options.yaml` file:
+
+```yaml
+# This file configures the analyzer, which statically analyzes Dart code to
+# check for errors, warnings, and lints.
+#
+# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
+# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
+# invoked from the command line by running `flutter analyze`.
+#
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options
+#
+# Full list of rules can be fount at https://dart.dev/tools/linter-rules
+#
+# To get a preview of the proposed changes run
+# dart fix --dry-run
+#
+# To apply the changes run
+# dart fix --apply
+include: package:application_base/analysis_options.yaml
+```
 
 ## Usage
 

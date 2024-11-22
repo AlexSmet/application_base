@@ -20,9 +20,11 @@ analyzer:
     strict-inference: true
     strict-raw-types: true
 
-# To use the automated fix,
-# run either 'dart fix --dry-run' for a preview of the proposed changes 
-# for a project, or 'dart fix --apply' to apply the changes.
+# To get a preview of the proposed changes run
+# dart fix --dry-run
+#
+# To apply the changes run
+# dart fix --apply
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
