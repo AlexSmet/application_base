@@ -4,7 +4,7 @@ import 'package:auto_route/auto_route.dart';
 
 abstract final class ApplicationBase {
   ///
-  void prepare({RootStackRouter? routerInstance}) {
+  static void prepare({RootStackRouter? routerInstance}) {
     /// Setup service locator
     ServiceLocatorBase.prepare();
 
