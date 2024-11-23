@@ -59,7 +59,7 @@ include: package:application_base/analysis_options.yaml
 ## Flavor
 
 Pre-created `Development` and `Production` flavors with public getter `flavor`.
-You can set set it directrly on package prepare flow
+You can set it directrly on package prepare flow:
 
 ```dart
 import 'package:application_base/application_base.dart';
@@ -68,7 +68,7 @@ import 'package:application_base/core/const/flavor_type.dart';
 ApplicationBase.prepare(currentFlavor: FlavorDevelopment());
 ```
 
-or everythere you want 
+or everythere you want by setter:
 
 ```dart
 import 'package:application_base/application_base.dart';
