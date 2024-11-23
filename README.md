@@ -17,6 +17,7 @@ Unified base for Flutter applications based on [special architecture](https://mi
 
 For now includes:
 * [Analysis options](#analysis-options)
+* [Flavor](#flavor)
 * [GetIt](#getit)
 * [Logger](#logger)
 * [Navigation utilities](#navigation-utilities)
@@ -54,6 +55,30 @@ Example `analysis_options.yaml` file:
 # dart fix --apply
 include: package:application_base/analysis_options.yaml
 ```
+
+## Flavor
+
+Pre-created `Development` and `Production` flavors with public getter `flavor`.
+You can set set it directrly on package prepare flow
+
+```dart
+import 'package:application_base/application_base.dart';
+import 'package:application_base/core/const/flavor_type.dart';
+
+ApplicationBase.prepare(currentFlavor: FlavorDevelopment());
+```
+
+or everythere you want 
+
+```dart
+import 'package:application_base/application_base.dart';
+import 'package:application_base/core/const/flavor_type.dart';
+
+flavor = FlavorDevelopment();
+```
+
+Note: it's highly recommended not to change the flavor while the application is 
+running. Just set it once when launching the application
 
 ## GetIt
 
