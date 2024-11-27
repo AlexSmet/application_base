@@ -35,6 +35,10 @@ void openDefaultScreen() => router
 Future<void> pushScreen({required PageRouteInfo<dynamic> route}) =>
     router.push(route);
 
+/// Adds a new entry to the screens stack by using path
+Future<void> pushNamed({required String routeName}) =>
+    router.pushNamed(routeName);
+
 /// Pops the last screen unless stack has one entry
 Future<void> popScreen({bool? result}) => router.maybePop(result);
 

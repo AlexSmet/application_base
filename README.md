@@ -211,6 +211,9 @@ void openDefaultScreen();
 /// Adds a new entry to the screens stack
 Future<void> pushScreen({required PageRouteInfo<dynamic> route});
 
+/// Adds a new entry to the screens stack by using path
+Future<void> pushNamed({required String routeName});
+
 /// Pops the last screen unless stack has one entry
 Future<void> popScreen({bool? result});
 
