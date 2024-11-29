@@ -11,7 +11,8 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
-Unified base for Flutter applications based on [special architecture](https://miro.com/app/board/uXjVNJVBM3o=/?share_link_id=771428578014)
+Unified base for Flutter applications based on 
+[special architecture](https://miro.com/app/board/uXjVNJVBM3o=/?share_link_id=771428578014)
 
 ## Features
 

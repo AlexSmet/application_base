@@ -17,6 +17,7 @@ dependencies:
     sdk: flutter
 
   # https://pub.dev/packages/get_it
+  # All platform supported
   get_it: ^8.0.2
   
   # https://pub.dev/packages/logger
