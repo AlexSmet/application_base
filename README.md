@@ -25,7 +25,19 @@ For now includes:
 
 ## Usage
 
-Just call `ApplicationBase.prepare();` on application  launching to initialize
+Add a line like this to your package's pubspec.yaml (and run an implicit 
+flutter pub get):
+
+```yaml
+dependencies:
+  # https://github.com/AlexSeednov/application_base
+  # All platform supported
+  application_base:
+    git:
+      url: https://github.com/AlexSeednov/application_base
+```
+
+Now just call `ApplicationBase.prepare();` on application  launching to initialize
 all necessary data.
 
 ## Analysis options
