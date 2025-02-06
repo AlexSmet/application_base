@@ -37,6 +37,7 @@ dependencies:
   application_base:
     git:
       url: https://github.com/AlexSeednov/application_base
+      ref: release/0.0.2
 ```
 
 Now just call `ApplicationBase.prepare();` on application  launching to initialize
