@@ -104,7 +104,7 @@ abstract base class NetworkServiceBase {
 
   ///
   void _onUpdateBase(NetworkEvent event) => switch (event) {
-        ///  Success
+        /// Success
         NetworkSuccess() => _onlineMode(),
 
         /// Connection

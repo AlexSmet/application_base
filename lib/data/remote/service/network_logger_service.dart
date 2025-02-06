@@ -36,7 +36,7 @@ void logResponseGot({
   required Response response,
 }) {
   String information = 'Request ${request.type} ${request.path}\n'
-      'Response ${response.statusCode}\n';
+      'Response ${response.statusCode}';
   if (_sendSensitive && response.body.isNotEmpty) {
     information += '\nBody ${response.body}';
   }
