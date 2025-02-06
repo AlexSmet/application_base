@@ -346,6 +346,8 @@ void logout(){
 
 TBD
 
+Service for safe JSON parsing included.
+
 ## Online / offline state change checker
 
 TBD
