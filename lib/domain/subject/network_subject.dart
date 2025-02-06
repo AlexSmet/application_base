@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:application_base/data/remote/const/network_event.dart';
 import 'package:rxdart/rxdart.dart';
 
+export 'package:application_base/data/remote/const/network_event.dart';
+
 final class NetworkSubject {
   ///
   final _networkSubject = PublishSubject<NetworkEvent>();
