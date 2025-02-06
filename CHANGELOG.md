@@ -1,3 +1,8 @@
+## 0.0.2
+
+* API interaction based on [http](https://pub.dev/packages/http)
+* Online / offline state change checker
+
 ## 0.0.1
 
 * Analysis options

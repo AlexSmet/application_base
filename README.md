@@ -346,6 +346,8 @@ void logout(){
 
 TBD
 
+Based on [http](https://pub.dev/packages/http).
+
 Service for safe JSON parsing included.
 
 ## Online / offline state change checker
