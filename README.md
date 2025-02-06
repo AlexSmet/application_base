@@ -22,6 +22,8 @@ For now includes:
 * [GetIt](#getit)
 * [Logger](#logger)
 * [Navigation utilities](#navigation-utilities)
+* [API interaction](#api-interaction)
+* [Online / offline state change checker](#online--offline-state-change-checker)
 
 ## Usage
 
@@ -339,3 +341,11 @@ void logout(){
     /// restore
 }
 ```
+
+## API interaction
+
+TBD
+
+## Online / offline state change checker
+
+TBD

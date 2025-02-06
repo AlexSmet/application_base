@@ -13,6 +13,9 @@ dependencies:
   # All platform supported
   auto_route: 9.2.2
 
+  # https://pub.dev/packages/connectivity_plus
+  connectivity_plus: 6.1.0
+
   # Base SDK
   flutter:
     sdk: flutter
