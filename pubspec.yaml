@@ -9,20 +9,32 @@ environment:
 
 dependencies:
   # https://pub.dev/packages/auto_route
+  #
   # All platform supported
-  auto_route: ^9.2.2
+  auto_route: 9.2.2
 
   # Base SDK
   flutter:
     sdk: flutter
 
   # https://pub.dev/packages/get_it
+  #
   # All platform supported
-  get_it: ^8.0.2
+  get_it: 8.0.2
+
+  # https://pub.dev/packages/http
+  http: 1.3.0
   
   # https://pub.dev/packages/logger
+  #
   # All platform supported
-  logger: ^2.5.0
+  logger: 2.5.0
+
+  # https://pub.dev/packages/meta
+  meta: 1.12.0
+
+  # https://pub.dev/packages/rxdart
+  rxdart: 0.28.0
 
 dev_dependencies:
   flutter_test:
