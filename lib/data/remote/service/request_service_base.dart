@@ -1,8 +1,8 @@
 import 'dart:async';
+// TODO(Alex): избавиться
 import 'dart:io';
 
 import 'package:application_base/core/service/service_locator.dart';
-import 'package:application_base/data/remote/const/network_event.dart';
 import 'package:application_base/data/remote/const/request_type.dart';
 import 'package:application_base/data/remote/service/network_logger_service.dart';
 import 'package:application_base/data/remote/service/request_timeout_service.dart';
@@ -31,7 +31,7 @@ abstract base class RequestServiceBase {
   /// special in this case.
   ///
   /// Otherwise return **Response** with necessary information.
-  Future<Response?> send({
+  Future<Response?> sendBase({
     required RequestType request,
     required Map<String, String> headers,
   }) async {

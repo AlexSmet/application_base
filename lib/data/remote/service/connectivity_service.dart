@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:application_base/core/service/logger_service.dart';
 import 'package:application_base/core/service/service_locator.dart';
-import 'package:application_base/data/remote/const/network_event.dart';
 import 'package:application_base/domain/subject/network_subject.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
