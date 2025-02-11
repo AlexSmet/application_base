@@ -10,6 +10,11 @@ import 'package:application_base/domain/subject/network_subject.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 
+// TODO(Alex): временные константы из RequestTimeoutService и
+// NetworkServiceBase перенести в этот класс - тогда при создании наследника
+// этого класса можно будет просто переопределить константы при необходимости,
+// а без переопределения будут использоваться дефолтные, как сейчас
+///
 /// Extended class should be a singleton
 abstract base class RequestServiceBase {
   // Optimize(Alex): попробовать заменить на RetryClient для автоматического
@@ -25,16 +30,14 @@ abstract base class RequestServiceBase {
   @mustBeOverridden
   Uri prepareUri({required String path});
 
-  // TODO(Alex): может вместо Response возвращать только statusCode и body?
-  //
-  // Или вообще RawDataEntity, добавив туда новое поле для statusCode - тогда
-  // его же сразу можно будет пробрасывать в json parsing, без необходимости
-  // создания отдельного экземпляра.
-  //
-  // Остальное всё равно не используется, но при этом использование Response
-  // привязывает к пакету http и вынуждает прописывать его в pubspec, что
-  // несколько нарушает абстракцию.
-  //
+  // TODO(Alex): Преобразовать RawDataEntity в ResponseEntity и возвращать его
+  // вместо Response. ResponseEntity будет независеть от текущего используемого
+  // пакета (пока это http, в дальнейшем может быть мигрируем на dio или
+  // добавим со временем что-то альтернативное, типа GraphQL) и содержать все
+  // нужные данные (пока это только код и тело, в дальнейшем может ещё что
+  // понадобится, сможем докинуть без потери обратной совместимости,
+  // просто расширив класс)
+  ///
   /// Return **null** only if got error with unified application behaviour
   /// via **errorSubject** stream (for example - `no connection` or
   /// `need authorization` errors), so it's not necessary to do something
