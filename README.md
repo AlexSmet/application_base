@@ -22,6 +22,8 @@ For now includes:
 * [GetIt](#getit)
 * [Logger](#logger)
 * [Navigation utilities](#navigation-utilities)
+* [API interaction](#api-interaction)
+* [Online / offline state change checker](#online--offline-state-change-checker)
 
 ## Usage
 
@@ -35,6 +37,7 @@ dependencies:
   application_base:
     git:
       url: https://github.com/AlexSeednov/application_base
+      ref: release/0.0.2
 ```
 
 Now just call `ApplicationBase.prepare();` on application  launching to initialize
@@ -339,3 +342,15 @@ void logout(){
     /// restore
 }
 ```
+
+## API interaction
+
+TBD
+
+Based on [http](https://pub.dev/packages/http).
+
+Service for safe JSON parsing included.
+
+## Online / offline state change checker
+
+TBD

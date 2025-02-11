@@ -29,7 +29,7 @@ enum AvailablePlatform {
   web,
 }
 
-// TODO(Alex): add list of supported platforms based on AvailablePlatform?
+// Optimize(Alex): add list of supported platforms based on AvailablePlatform?
 
 ///
 bool get isDebug => kDebugMode;

@@ -2,6 +2,7 @@ import 'package:application_base/core/const/flavor_type.dart';
 import 'package:application_base/core/service/configuration_service.dart';
 import 'package:application_base/core/service/service_locator.dart';
 import 'package:application_base/presentation/navigation/navigation_service.dart';
+import 'package:application_base/presentation/service/lifecycle_service.dart';
 import 'package:auto_route/auto_route.dart';
 
 abstract final class ApplicationBase {
@@ -20,5 +21,8 @@ abstract final class ApplicationBase {
     if (routerInstance != null) {
       router = routerInstance;
     }
+
+    /// Prepare services
+    getIt<LifecycleService>().prepare();
   }
 }
