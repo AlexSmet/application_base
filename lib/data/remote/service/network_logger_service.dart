@@ -6,6 +6,9 @@ import 'package:http/http.dart';
 /// Is it possible to send sensitive information to remote logger or not
 bool get _sendSensitive => isDebug;
 
+// TODO(Alex): немного переименовать, как в комментарии
+// https://github.com/AlexSeednov/application_base/pull/3#discussion_r1950461782
+
 /// Logging request
 void logRequestSending({
   required RequestType request,
