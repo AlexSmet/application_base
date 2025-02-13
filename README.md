@@ -71,8 +71,11 @@ dependencies:
       ref: release/0.0.2
 ```
 
-Now just call `ApplicationBase.prepare();` on application  launching to initialize
-all necessary data.
+Now just call `ApplicationBase.prepare();` on application launching to 
+initialize all necessary data.
+
+Important: do not forget to call `WidgetsFlutterBinding.ensureInitialized();` 
+before preparing.
 
 ## Analysis options
 

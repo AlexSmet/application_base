@@ -4,7 +4,6 @@ import 'package:application_base/core/service/service_locator.dart';
 import 'package:application_base/presentation/navigation/navigation_service.dart';
 import 'package:application_base/presentation/service/lifecycle_service.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/widgets.dart';
 
 abstract final class ApplicationBase {
   ///
@@ -12,9 +11,6 @@ abstract final class ApplicationBase {
     FlavorType? currentFlavor,
     RootStackRouter? routerInstance,
   }) {
-    ///
-    WidgetsFlutterBinding.ensureInitialized();
-
     /// Setup service locator
     ServiceLocatorBase.prepare();
 
