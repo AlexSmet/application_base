@@ -11,7 +11,9 @@ dependencies:
   # https://pub.dev/packages/auto_route
   #
   # All platform supported
-  auto_route: ^9.3.0+1
+  #
+  # Versions 9.2.2+ requires flutter 3.24.0+
+  auto_route: ^9.2.2
 
   # https://pub.dev/packages/connectivity_plus
   #
