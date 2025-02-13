@@ -12,6 +12,9 @@ abstract final class ApplicationBase {
     FlavorType? currentFlavor,
     RootStackRouter? routerInstance,
   }) {
+    ///
+    WidgetsFlutterBinding.ensureInitialized();
+
     /// Setup service locator
     ServiceLocatorBase.prepare();
 
@@ -22,9 +25,6 @@ abstract final class ApplicationBase {
     if (routerInstance != null) {
       router = routerInstance;
     }
-
-    ///
-    WidgetsFlutterBinding.ensureInitialized();
 
     /// Prepare services
     getIt<LifecycleService>().prepare();
