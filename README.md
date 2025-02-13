@@ -25,6 +25,37 @@ For now includes:
 * [API interaction](#api-interaction)
 * [Online / offline state change checker](#online--offline-state-change-checker)
 
+## Supported platforms
+
+* Android
+* iOS
+* Linux - not tested yet
+* MacOS - not tested yet
+* Web - with some issues on API interactions via http
+* Windows - not tested yet
+
+## Requirements 
+
+Based on minimum requirements from all usage packages. 
+
+Flutter & dart versions compatibility 
+[information](https://docs.flutter.dev/release/archive)
+
+* Flutter >=3.22.0 - dart 3.4.0
+* Dart >=3.4.0 <4.0.0 - http 1.3.0
+* iOS >=12.0 - connectivity_plus 6.1.3
+* MacOS >=10.14 - connectivity_plus 6.1.3
+* Android compileSDK 34 - connectivity_plus 6.1.3
+* Java 17 - connectivity_plus 6.1.3
+* Android Gradle Plugin >=8.3.0 - connectivity_plus 6.1.3
+* Gradle wrapper >=8.4 - connectivity_plus 6.1.3
+
+## Changelog
+
+Refer to the 
+[Changelog](https://github.com/AlexSeednov/application_base/blob/main/CHANGELOG.md) 
+to get all release notes
+
 ## Usage
 
 Add a line like this to your package's pubspec.yaml (and run an implicit 
@@ -40,8 +71,11 @@ dependencies:
       ref: release/0.0.2
 ```
 
-Now just call `ApplicationBase.prepare();` on application  launching to initialize
-all necessary data.
+Now just call `ApplicationBase.prepare();` on application launching to 
+initialize all necessary data.
+
+Important: do not forget to call `WidgetsFlutterBinding.ensureInitialized();` 
+before preparing.
 
 ## Analysis options
 

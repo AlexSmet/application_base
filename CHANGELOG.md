@@ -1,3 +1,7 @@
+## 0.0.3
+
+* Dependencies update
+
 ## 0.0.2
 
 * API interaction based on [http](https://pub.dev/packages/http)
