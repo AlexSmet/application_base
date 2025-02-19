@@ -93,7 +93,7 @@ abstract base class RequestServiceBase {
       /// Check it
       if (!request.expectedStatusList.contains(response.statusCode)) {
         if (response.statusCode == HttpStatus.unauthorized) {
-          return await _onUnauthorized(request: request);
+          return await onUnauthorized(request: request);
         }
         if (response.statusCode == HttpStatus.gatewayTimeout) {
           logResponseError(request: request, statusCode: response.statusCode);
@@ -165,7 +165,7 @@ abstract base class RequestServiceBase {
 
   /// Just log an error and notify subjects by default.
   /// Can be overriden for refresh token and re-send request, for example.
-  Future<Response?> _onUnauthorized({required RequestType request}) async {
+  Future<Response?> onUnauthorized({required RequestType request}) async {
     logResponseError(request: request, statusCode: 401);
     _notify(NetworkUnauthorized());
     return null;
