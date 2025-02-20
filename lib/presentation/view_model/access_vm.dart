@@ -2,6 +2,7 @@ import 'package:application_base/core/service/logger_service.dart';
 import 'package:application_base/presentation/navigation/navigation_service.dart';
 import 'package:flutter/foundation.dart';
 
+/// Singleton
 final class AccessVM with ChangeNotifier {
   ///
   bool _isGranted = false;
