@@ -24,7 +24,7 @@ abstract base class RequestServiceBase {
   final _client = Client();
 
   ///
-  final _connectionSubject = getIt<NetworkSubject>();
+  final _networkSubject = getIt<NetworkSubject>();
 
   ///
   @mustBeOverridden
@@ -93,6 +93,12 @@ abstract base class RequestServiceBase {
       /// Check it
       if (!request.expectedStatusList.contains(response.statusCode)) {
         if (response.statusCode == HttpStatus.unauthorized) {
+          // To apply custom behaviour on unathorized response (for example to
+          // refresh access token)
+          // - add unauthorized status code to expectedStatusList and
+          // check response manually (do not forget to call `onUnauthorized` to
+          // notify `NetworkSubject`)
+          // - override onUnauthorized function
           return await onUnauthorized(request: request);
         }
         if (response.statusCode == HttpStatus.gatewayTimeout) {
@@ -164,7 +170,7 @@ abstract base class RequestServiceBase {
   }
 
   /// Just log an error and notify subjects by default.
-  /// Can be overriden for refresh token and re-send request, for example.
+  /// Can be overriden for refresh token and re-sending request, for example
   Future<Response?> onUnauthorized({required RequestType request}) async {
     logResponseError(request: request, statusCode: 401);
     _notify(NetworkUnauthorized());
@@ -174,7 +180,7 @@ abstract base class RequestServiceBase {
   ///
   void _notify(NetworkEvent type, {bool silence = false}) {
     if (silence) return;
-    _connectionSubject.add(type);
+    _networkSubject.add(type);
   }
 
   // TODO(Alex): web is not supported for now because of MultipartFile
