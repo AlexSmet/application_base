@@ -15,7 +15,7 @@ sealed class RequestType {
   final Object? body = null;
 
   /// Expected response statuse list in API endpoint
-  final List<int> expectedStatusList = [];
+  List<int> expectedStatusList = [];
 
   /// Expected response pair `HTTP status -> Network event` map in API endpoint
   final Map<int, NetworkEvent> expectedErrorMap = {};
@@ -54,7 +54,7 @@ final class RequestGet implements RequestType {
 
   /// Expected response statuses in API endpoint
   @override
-  final List<int> expectedStatusList;
+  List<int> expectedStatusList;
 
   /// Expected response errors in API endpoint
   @override
@@ -95,7 +95,7 @@ final class RequestPost implements RequestType {
 
   /// Expected response statuses in API endpoint
   @override
-  final List<int> expectedStatusList;
+  List<int> expectedStatusList;
 
   /// Expected response events by status code in API endpoint
   @override
@@ -136,7 +136,7 @@ final class RequestPostWithFile implements RequestType {
 
   /// Expected response statuses in API endpoint
   @override
-  final List<int> expectedStatusList;
+  List<int> expectedStatusList;
 
   /// Expected response errors in API endpoint
   @override
@@ -180,7 +180,7 @@ final class RequestPut implements RequestType {
 
   /// Expected response statuses in API endpoint
   @override
-  final List<int> expectedStatusList;
+  List<int> expectedStatusList;
 
   /// Expected response errors in API endpoint
   @override
@@ -221,7 +221,7 @@ final class RequestDelete implements RequestType {
 
   /// Expected response statuses in API endpoint
   @override
-  final List<int> expectedStatusList;
+  List<int> expectedStatusList;
 
   /// Expected response errors in API endpoint
   @override
