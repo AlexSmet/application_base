@@ -36,7 +36,7 @@ abstract base class NetworkServiceBase {
   ///
   Future<void> prepare() async {
     if (_subscription != null) return;
-    _subscription = _networkSubject.listen(_onUpdateBase);
+    _subscription = _networkSubject.listen(onUpdate);
 
     await _connectivityService.prepare();
     if (!_connectivityService.isConnectivityAvailable) return;
@@ -103,7 +103,9 @@ abstract base class NetworkServiceBase {
   }
 
   ///
-  void _onUpdateBase(NetworkEvent event) => switch (event) {
+  @mustBeOverridden
+  @mustCallSuper
+  void onUpdate(NetworkEvent event) => switch (event) {
         /// Success
         NetworkSuccess() => _onlineMode(),
 
@@ -114,10 +116,6 @@ abstract base class NetworkServiceBase {
         /// All other doesn't metter here, will be handled in overriden function
         _ => {},
       };
-
-  ///
-  @mustBeOverridden
-  void onUpdate(NetworkEvent event);
 
   ///
   bool get isWiFi => getIt<ConnectivityService>().isWiFi;
