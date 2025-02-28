@@ -202,6 +202,8 @@ abstract base class RequestServiceBase {
     request.headers.addAll(headers);
     if (isWebBased) {
       /// And special header for web compatibility
+      request.headers['Access-Control-Allow-Origin'] = '*';
+      request.headers['Cache-Control'] = 'no-cache';
       request.headers['Content-Type'] = 'application/x-www-form-urlencoded';
     }
 
