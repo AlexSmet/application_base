@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:application_base/data/remote/const/network_event.dart';
 import 'package:application_base/data/remote/const/request_duration_type.dart';
+import 'package:cross_file/cross_file.dart';
 
 /// API request type with all necessary data
 sealed class RequestType {
@@ -151,7 +152,7 @@ final class RequestPostWithFile implements RequestType {
   final RequestDurationType durationType = RequestDurationType.long;
 
   /// Field name and path to local file
-  final Map<String, String> files;
+  final Map<String, XFile> files;
 }
 
 ///

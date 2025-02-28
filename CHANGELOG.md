@@ -1,3 +1,9 @@
+## 0.0.4
+
+* **RequestPostWithFile** is now web-compatible but requires XFile instead of 
+local file path
+* 
+
 ## 0.0.3
 
 * Dependencies update

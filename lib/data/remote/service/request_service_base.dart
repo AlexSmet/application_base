@@ -1,12 +1,15 @@
 import 'dart:async';
 // TODO(Alex): избавиться
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:application_base/core/service/platform_service.dart';
 import 'package:application_base/core/service/service_locator.dart';
 import 'package:application_base/data/remote/const/request_type.dart';
 import 'package:application_base/data/remote/service/network_logger_service.dart';
 import 'package:application_base/data/remote/service/request_timeout_service.dart';
 import 'package:application_base/domain/subject/network_subject.dart';
+import 'package:cross_file/cross_file.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 
@@ -183,7 +186,7 @@ abstract base class RequestServiceBase {
     _networkSubject.add(type);
   }
 
-  // TODO(Alex): web is not supported for now because of MultipartFile
+  ///
   Future<Response> _sendPostForm(
     Uri url, {
     required Map<String, String> headers,
@@ -197,13 +200,28 @@ abstract base class RequestServiceBase {
 
     /// Add headers
     request.headers.addAll(headers);
+    if (isWebBased) {
+      /// And special header for web compatibility
+      request.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    }
 
     /// Add file
-    requestData.files.forEach(
-      (String field, String path) async => request.files.add(
-        await MultipartFile.fromPath(field, path),
-      ),
-    );
+    requestData.files.forEach((String field, XFile file) async {
+      if (isMobileBased) {
+        /// Mobile
+        request.files.add(await MultipartFile.fromPath(field, file.path));
+      } else {
+        /// Web - need to use fromBytes instead of fromPath
+        final Uint8List fileBytes = await file.readAsBytes();
+        request.files.add(
+          MultipartFile.fromBytes(
+            field,
+            fileBytes,
+            filename: file.name,
+          ),
+        );
+      }
+    });
 
     /// Sending request
     return Response.fromStream(await request.send());

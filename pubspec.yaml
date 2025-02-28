@@ -1,6 +1,6 @@
 name: application_base
 description: "Unified base for Flutter applications"
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/AlexSeednov/application_base
 
 environment:
@@ -19,6 +19,11 @@ dependencies:
   #
   # All platform supported
   connectivity_plus: ^6.1.3
+
+  # https://pub.dev/packages/cross_file
+  #
+  # All platform supported
+  cross_file: 0.3.4+2
 
   # Base SDK
   flutter:
