@@ -39,14 +39,6 @@ abstract base class RequestServiceBase {
   @mustBeOverridden
   Uri prepareUri({required String path});
 
-  // TODO(Alex): Преобразовать RawDataEntity в ResponseEntity и возвращать его
-  // вместо Response. ResponseEntity будет независеть от текущего используемого
-  // пакета (пока это http, в дальнейшем может быть мигрируем на dio или
-  // добавим со временем что-то альтернативное, типа GraphQL) и содержать все
-  // нужные данные (пока это только код и тело, в дальнейшем может ещё что
-  // понадобится, сможем докинуть без потери обратной совместимости,
-  // просто расширив класс)
-  ///
   /// Return **null** only if got error with unified application behaviour
   /// via **errorSubject** stream (for example - `no connection` or
   /// `need authorization` errors), so it's not necessary to do something

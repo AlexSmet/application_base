@@ -6,34 +6,9 @@ import 'package:cross_file/cross_file.dart';
 
 /// API request type with all necessary data
 sealed class RequestType {
-  /// Type name for logging
-  final String type = '';
-
-  /// Path for request without address and base API segment
-  final String path = '';
-
-  /// Body for request
-  final Object? body = null;
-
-  /// Expected response statuse list in API endpoint
-  List<int> expectedStatusList = [];
-
-  /// Expected response pair `HTTP status -> Network event` map in API endpoint
-  final Map<int, NetworkEvent> expectedErrorMap = {};
-
-  /// Do not show error on silence mode
-  final bool silence = false;
-
-  /// Average request duration type
-  final durationType = RequestDurationType.normal;
-}
-
-// TODO(Alex): здесь и далее заменить на extends добавив конструктор в базовый
-// класс, тогда у наследников можно будет убрать @override'ы и они сильно
-// сократяться в размерах, уйдет дублирование
-final class RequestGet implements RequestType {
   ///
-  RequestGet({
+  RequestType({
+    required this.type,
     required this.path,
     this.expectedStatusList = const [HttpStatus.ok],
     this.expectedErrorMap = const {},
@@ -42,32 +17,37 @@ final class RequestGet implements RequestType {
   });
 
   /// Type name for logging
-  @override
-  final String type = 'GET';
+  final String type;
 
   /// Path for request without address and base API segment
-  @override
   final String path;
 
   /// Body for request
-  @override
   final Object? body = null;
 
-  /// Expected response statuses in API endpoint
-  @override
+  /// Expected response statuse list in API endpoint
   List<int> expectedStatusList;
 
-  /// Expected response errors in API endpoint
-  @override
+  /// Expected response pair `HTTP status -> Network event` map in API endpoint
   final Map<int, NetworkEvent> expectedErrorMap;
 
   /// Do not show error on silence mode
-  @override
   final bool silence;
 
   /// Average request duration type
-  @override
   final RequestDurationType durationType;
+}
+
+///
+final class RequestGet extends RequestType {
+  ///
+  RequestGet({
+    required super.path,
+    super.expectedStatusList = const [HttpStatus.ok],
+    super.expectedErrorMap = const {},
+    super.silence = false,
+    super.durationType = RequestDurationType.normal,
+  }) : super(type: 'GET');
 }
 
 ///
