@@ -1,3 +1,18 @@
+## 0.0.4
+
+* **LifecycleService** is now with **AppLifecycleState** listener
+* **RequestPostWithFile** is now web-compatible but requires XFile instead of 
+local file path
+* In **RequestServiceBase** added parameter **logSensitive** to send or not to
+send sensitive data in logger (instead of private **_sendSensitive** parameter)
+* **onUnauthorized** -> **notifyUnauthorized**
+* Logger events in debug mode won't be sent to remote logger anymore
+* Error in response will be logged in remote logger with response body despite
+**logSensitive** parameter
+* Network logger functions cleared
+* **ConnectionRestoreMixin** migrated from Presentation layer to Domain
+
+
 ## 0.0.3
 
 * Dependencies update

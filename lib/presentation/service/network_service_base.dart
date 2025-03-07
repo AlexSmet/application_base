@@ -46,8 +46,7 @@ abstract base class NetworkServiceBase {
     if (!result) _activateOfflineMode();
   }
 
-  // Information(Alex): не используется, так как класс - одиночка с однократной
-  // инициализацией при запуске приложения
+  ///
   void dispose() {
     _connectivityService.dispose();
 

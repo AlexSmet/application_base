@@ -3,28 +3,20 @@ import 'package:application_base/core/service/platform_service.dart';
 import 'package:application_base/data/remote/const/request_type.dart';
 import 'package:http/http.dart';
 
-/// Is it possible to send sensitive information to remote logger or not
-bool get _sendSensitive => isDebug;
-
-// TODO(Alex): немного переименовать, как в комментарии
-// https://github.com/AlexSeednov/application_base/pull/3#discussion_r1950461782
-
-/// Logging request
-void logRequestSending({
-  required RequestType request,
-  required String? body,
-}) {
-  String information = 'Request ${request.type} ${request.path} sending';
-  if (_sendSensitive && body != null) information += '\nBody $body';
-  logInfo(info: information);
-}
+/// Can send sensitive data to remote logger or not
+bool canLogSensitive = isDebug;
 
 /// Logging request information
 void logRequestInfo({
   required RequestType request,
-  required String info,
-}) =>
-    logInfo(info: 'Request ${request.type} ${request.path}\n$info');
+  String? body,
+  String? info,
+}) {
+  String information = 'Request ${request.type} ${request.path}';
+  if (canLogSensitive && body != null) information += '\nBody $body';
+  if (info != null) information += '\n$info';
+  logInfo(info: information);
+}
 
 /// Logging request error
 void logRequestError({
@@ -34,13 +26,13 @@ void logRequestError({
     logError(error: 'Request ${request.type} ${request.path}\n$error');
 
 /// Logging response
-void logResponseGot({
+void logResponseInfo({
   required RequestType request,
   required Response response,
 }) {
   String information = 'Request ${request.type} ${request.path}\n'
       'Response ${response.statusCode}';
-  if (_sendSensitive && response.body.isNotEmpty) {
+  if (canLogSensitive && response.body.isNotEmpty) {
     information += '\nBody ${response.body}';
   }
   logInfo(info: information);
@@ -49,12 +41,11 @@ void logResponseGot({
 /// Error in response
 void logResponseError({
   required RequestType request,
-  required int statusCode,
-  String message = '',
+  required Response response,
 }) {
   String error = 'Request ${request.type} ${request.path}\n'
-      'Response $statusCode';
-  if (message.isNotEmpty) error += ' - $message';
+      'Response ${response.statusCode}';
+  if (response.body.isNotEmpty) error += '\nBody ${response.body}';
   logError(error: error);
 }
 
@@ -66,7 +57,7 @@ void logJsonParsingError({
 }) {
   String error = 'Request $source\n'
       'Got JSON parsing error $info';
-  if (_sendSensitive) error += '\n$json';
+  if (canLogSensitive) error += '\n$json';
   logError(error: error);
 }
 

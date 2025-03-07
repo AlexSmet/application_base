@@ -13,11 +13,20 @@ abstract final class ServiceLocatorBase {
     getIt
 
       /// Data layer
-      ..registerLazySingleton<ConnectivityService>(ConnectivityService.new)
-      ..registerLazySingleton<NetworkSubject>(NetworkSubject.new)
+      ..registerLazySingleton<ConnectivityService>(
+        ConnectivityService.new,
+        dispose: (service) => service.dispose(),
+      )
+      ..registerLazySingleton<NetworkSubject>(
+        NetworkSubject.new,
+        dispose: (service) => service.dispose(),
+      )
 
       /// Presentation layer
-      ..registerLazySingleton<LifecycleService>(LifecycleService.new)
+      ..registerLazySingleton<LifecycleService>(
+        LifecycleService.new,
+        dispose: (service) => service.dispose(),
+      )
       ..registerLazySingleton<AccessVM>(AccessVM.new);
   }
 }

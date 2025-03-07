@@ -10,8 +10,7 @@ final class NetworkSubject {
   ///
   final _networkSubject = PublishSubject<NetworkEvent>();
 
-  // Information(Alex): не используется, так как класс - одиночка с однократной
-  // инициализацией при запуске приложения
+  ///
   void dispose() {
     _networkSubject.close();
   }

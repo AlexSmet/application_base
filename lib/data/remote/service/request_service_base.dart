@@ -1,12 +1,15 @@
 import 'dart:async';
 // TODO(Alex): избавиться
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:application_base/core/service/platform_service.dart';
 import 'package:application_base/core/service/service_locator.dart';
 import 'package:application_base/data/remote/const/request_type.dart';
 import 'package:application_base/data/remote/service/network_logger_service.dart';
 import 'package:application_base/data/remote/service/request_timeout_service.dart';
 import 'package:application_base/domain/subject/network_subject.dart';
+import 'package:cross_file/cross_file.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 
@@ -25,6 +28,11 @@ abstract base class RequestServiceBase {
 
   ///
   final _networkSubject = getIt<NetworkSubject>();
+
+  /// **isDebug** by default
+  set logSensitive(bool newValue) {
+    canLogSensitive = newValue;
+  }
 
   ///
   @mustBeOverridden
@@ -53,7 +61,11 @@ abstract base class RequestServiceBase {
       final Uri uri = prepareUri(path: request.path);
 
       /// Log request
-      logRequestSending(request: request, body: request.body?.toString());
+      logRequestInfo(
+        request: request,
+        body: request.body?.toString(),
+        info: 'Sending',
+      );
 
       /// Prepare response
       final Future<Response> futureResponse = switch (request) {
@@ -87,22 +99,20 @@ abstract base class RequestServiceBase {
       final Response response = await futureResponse
           .timeout(RequestTimeoutService.timeout(request.durationType));
 
-      /// Log response
-      logResponseGot(request: request, response: response);
-
       /// Check it
       if (!request.expectedStatusList.contains(response.statusCode)) {
+        /// Some error happened, log it
+        logResponseError(request: request, response: response);
+
         if (response.statusCode == HttpStatus.unauthorized) {
           // To apply custom behaviour on unathorized response (for example to
-          // refresh access token)
-          // - add unauthorized status code to expectedStatusList and
-          // check response manually (do not forget to call `onUnauthorized` to
-          // notify `NetworkSubject`)
-          // - override onUnauthorized function
-          return await onUnauthorized(request: request);
+          // refresh access token) add unauthorized status code to
+          // expectedStatusList and check response manually (do not forget to
+          // call `onUnauthorized` to notify `NetworkSubject`)
+          notifyUnauthorized();
+          return null;
         }
         if (response.statusCode == HttpStatus.gatewayTimeout) {
-          logResponseError(request: request, statusCode: response.statusCode);
           _notify(NetworkConnectionLost());
           return null;
         }
@@ -113,29 +123,17 @@ abstract base class RequestServiceBase {
         if (expectedErrorType != null) {
           /// Custom handler
           _notify(expectedErrorType, silence: request.silence);
-
-          /// But also need to log it
-          logResponseError(
-            request: request,
-            statusCode: response.statusCode,
-            message: 'expected error',
-          );
           return null;
         }
 
         /// Handle it as unexpected response
-        logResponseError(
-          request: request,
-          statusCode: response.statusCode,
-          message: 'unexpected error',
-        );
         _notify(NetworkUnexpectedResponse(), silence: request.silence);
         return null;
       }
 
-      /// Expected response, just return it
+      /// Expected response, just log it, notify and return
+      logResponseInfo(request: request, response: response);
       _notify(NetworkSuccess(), silence: request.silence);
-
       return response;
     } on TimeoutException {
       /// Time is out
@@ -169,13 +167,8 @@ abstract base class RequestServiceBase {
     return null;
   }
 
-  /// Just log an error and notify subjects by default.
-  /// Can be overriden for refresh token and re-sending request, for example
-  Future<Response?> onUnauthorized({required RequestType request}) async {
-    logResponseError(request: request, statusCode: 401);
-    _notify(NetworkUnauthorized());
-    return null;
-  }
+  /// Just notify subjects
+  void notifyUnauthorized() => _notify(NetworkUnauthorized());
 
   ///
   void _notify(NetworkEvent type, {bool silence = false}) {
@@ -183,7 +176,7 @@ abstract base class RequestServiceBase {
     _networkSubject.add(type);
   }
 
-  // TODO(Alex): web is not supported for now because of MultipartFile
+  ///
   Future<Response> _sendPostForm(
     Uri url, {
     required Map<String, String> headers,
@@ -197,13 +190,30 @@ abstract base class RequestServiceBase {
 
     /// Add headers
     request.headers.addAll(headers);
+    if (isWebBased) {
+      /// And special header for web compatibility
+      request.headers['Access-Control-Allow-Origin'] = '*';
+      request.headers['Cache-Control'] = 'no-cache';
+      request.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    }
 
     /// Add file
-    requestData.files.forEach(
-      (String field, String path) async => request.files.add(
-        await MultipartFile.fromPath(field, path),
-      ),
-    );
+    requestData.files.forEach((String field, XFile file) async {
+      if (isMobileBased) {
+        /// Mobile
+        request.files.add(await MultipartFile.fromPath(field, file.path));
+      } else {
+        /// Web - need to use fromBytes instead of fromPath
+        final Uint8List fileBytes = await file.readAsBytes();
+        request.files.add(
+          MultipartFile.fromBytes(
+            field,
+            fileBytes,
+            filename: file.name,
+          ),
+        );
+      }
+    });
 
     /// Sending request
     return Response.fromStream(await request.send());

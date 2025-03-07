@@ -24,6 +24,7 @@ For now includes:
 * [Navigation utilities](#navigation-utilities)
 * [API interaction](#api-interaction)
 * [Online / offline state change checker](#online--offline-state-change-checker)
+* [Application lifecycle state change checker](#application-lifecycle-state-change-checker)
 
 ## Supported platforms
 
@@ -388,3 +389,17 @@ Service for safe JSON parsing included.
 ## Online / offline state change checker
 
 TBD
+
+## Application lifecycle state change checker
+
+Realised via `LifecycleService` singleton.
+
+```dart
+  /// Create onUpdate function
+  void onUpdate(AppLifecycleState state){
+    /// Do some stuff
+  }
+
+  /// And subscribe to changes
+  getIt<LifecycleService>().listen(onUpdate);
+```
