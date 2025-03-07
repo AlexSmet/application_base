@@ -2,28 +2,20 @@ import 'package:application_base/core/service/logger_service.dart';
 import 'package:application_base/data/remote/const/request_type.dart';
 import 'package:http/http.dart';
 
-// TODO(Alex): немного переименовать, как в комментарии
-// https://github.com/AlexSeednov/application_base/pull/3#discussion_r1950461782
-
 /// Can send sensitive data to remote logger or not
 bool canLogSensitive = false;
-
-/// Logging request
-void logRequestSending({
-  required RequestType request,
-  required String? body,
-}) {
-  String information = 'Request ${request.type} ${request.path} sending';
-  if (canLogSensitive && body != null) information += '\nBody $body';
-  logInfo(info: information);
-}
 
 /// Logging request information
 void logRequestInfo({
   required RequestType request,
-  required String info,
-}) =>
-    logInfo(info: 'Request ${request.type} ${request.path}\n$info');
+  String? body,
+  String? info,
+}) {
+  String information = 'Request ${request.type} ${request.path}';
+  if (canLogSensitive && body != null) information += '\nBody $body';
+  if (info != null) information += '\n$info';
+  logInfo(info: information);
+}
 
 /// Logging request error
 void logRequestError({
@@ -33,7 +25,7 @@ void logRequestError({
     logError(error: 'Request ${request.type} ${request.path}\n$error');
 
 /// Logging response
-void logResponseGot({
+void logResponseInfo({
   required RequestType request,
   required Response response,
 }) {
