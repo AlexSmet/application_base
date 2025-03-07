@@ -18,6 +18,12 @@ final class LifecycleService {
   AppLifecycleListener? _listener;
 
   ///
+  AppLifecycleState _actualState = AppLifecycleState.inactive;
+
+  ///
+  AppLifecycleState get actualState => _actualState;
+
+  ///
   void prepare() {
     if (_listener != null) return;
     _listener = AppLifecycleListener(onStateChange: _onUpdate);
@@ -31,7 +37,8 @@ final class LifecycleService {
 
   ///
   void _onUpdate(AppLifecycleState state) {
-    logInfo(info: 'App state changed to $state');
+    logInfo(info: 'App state changed from $actualState to $state');
+    _actualState = state;
 
     if (state == AppLifecycleState.resumed) {
       /// Need to check connectivity
