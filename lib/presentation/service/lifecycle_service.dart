@@ -18,7 +18,7 @@ final class LifecycleService {
   AppLifecycleListener? _listener;
 
   ///
-  AppLifecycleState _actualState = AppLifecycleState.inactive;
+  AppLifecycleState _actualState = AppLifecycleState.resumed;
 
   ///
   AppLifecycleState get actualState => _actualState;
