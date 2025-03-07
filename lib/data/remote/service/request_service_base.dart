@@ -25,7 +25,10 @@ abstract base class RequestServiceBase {
   // перезапроса в случае ошибок https://pub.dev/packages/http#retrying-requests
   // Настроить обработку ошибок - как минимум исключить 401.
   /// https://dart.dev/tutorials/server/fetch-data#make-multiple-requests
-  final client = Client();
+  Client _client = Client();
+
+  ///
+  set client(Client newValue) => _client = newValue;
 
   ///
   final _networkSubject = getIt<NetworkSubject>();
@@ -62,11 +65,11 @@ abstract base class RequestServiceBase {
 
       /// Prepare response
       final Future<Response> futureResponse = switch (request) {
-        RequestGet() => client.get(
+        RequestGet() => _client.get(
             uri,
             headers: headers,
           ),
-        RequestPost() => client.post(
+        RequestPost() => _client.post(
             uri,
             headers: headers,
             body: request.body,
@@ -76,12 +79,12 @@ abstract base class RequestServiceBase {
             headers: headers,
             requestData: request,
           ),
-        RequestPut() => client.put(
+        RequestPut() => _client.put(
             uri,
             headers: headers,
             body: request.body,
           ),
-        RequestDelete() => client.delete(
+        RequestDelete() => _client.delete(
             uri,
             headers: headers,
             body: request.body,
