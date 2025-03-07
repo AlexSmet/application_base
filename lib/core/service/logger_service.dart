@@ -45,8 +45,9 @@ void logInfo({
     /// For logging in browser console on Web
     // ignore: avoid_print
     if (isWeb) print(message);
+  } else {
+    logInfoRemote?.call(information: message);
   }
-  logInfoRemote?.call(information: message);
 }
 
 /// Logging some error
@@ -68,8 +69,9 @@ void logError({
     /// For logging in browser console on Web
     // ignore: avoid_print
     if (isWeb) print(message);
+  } else {
+    logErrorRemote?.call(error: message);
   }
-  logErrorRemote?.call(error: message);
 }
 
 /// New screen opened

@@ -29,6 +29,11 @@ abstract base class RequestServiceBase {
   ///
   final _networkSubject = getIt<NetworkSubject>();
 
+  /// **false** by default
+  set logSensitive(bool newValue) {
+    canLogSensitive = newValue;
+  }
+
   ///
   @mustBeOverridden
   Uri prepareUri({required String path});
@@ -90,22 +95,20 @@ abstract base class RequestServiceBase {
       final Response response = await futureResponse
           .timeout(RequestTimeoutService.timeout(request.durationType));
 
-      /// Log response
-      logResponseGot(request: request, response: response);
-
       /// Check it
       if (!request.expectedStatusList.contains(response.statusCode)) {
+        /// Some error happened, log it
+        logResponseError(request: request, response: response);
+
         if (response.statusCode == HttpStatus.unauthorized) {
           // To apply custom behaviour on unathorized response (for example to
-          // refresh access token)
-          // - add unauthorized status code to expectedStatusList and
-          // check response manually (do not forget to call `onUnauthorized` to
-          // notify `NetworkSubject`)
-          // - override onUnauthorized function
-          return await onUnauthorized(request: request);
+          // refresh access token) add unauthorized status code to
+          // expectedStatusList and check response manually (do not forget to
+          // call `onUnauthorized` to notify `NetworkSubject`)
+          notifyUnauthorized();
+          return null;
         }
         if (response.statusCode == HttpStatus.gatewayTimeout) {
-          logResponseError(request: request, statusCode: response.statusCode);
           _notify(NetworkConnectionLost());
           return null;
         }
@@ -116,29 +119,17 @@ abstract base class RequestServiceBase {
         if (expectedErrorType != null) {
           /// Custom handler
           _notify(expectedErrorType, silence: request.silence);
-
-          /// But also need to log it
-          logResponseError(
-            request: request,
-            statusCode: response.statusCode,
-            message: 'expected error',
-          );
           return null;
         }
 
         /// Handle it as unexpected response
-        logResponseError(
-          request: request,
-          statusCode: response.statusCode,
-          message: 'unexpected error',
-        );
         _notify(NetworkUnexpectedResponse(), silence: request.silence);
         return null;
       }
 
-      /// Expected response, just return it
+      /// Expected response, just log it, notify and return
+      logResponseGot(request: request, response: response);
       _notify(NetworkSuccess(), silence: request.silence);
-
       return response;
     } on TimeoutException {
       /// Time is out
@@ -172,13 +163,8 @@ abstract base class RequestServiceBase {
     return null;
   }
 
-  /// Just log an error and notify subjects by default.
-  /// Can be overriden for refresh token and re-sending request, for example
-  Future<Response?> onUnauthorized({required RequestType request}) async {
-    logResponseError(request: request, statusCode: 401);
-    _notify(NetworkUnauthorized());
-    return null;
-  }
+  /// Just notify subjects
+  void notifyUnauthorized() => _notify(NetworkUnauthorized());
 
   ///
   void _notify(NetworkEvent type, {bool silence = false}) {
