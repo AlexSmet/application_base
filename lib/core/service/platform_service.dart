@@ -79,6 +79,6 @@ AvailablePlatform get currentPlatform {
   if (isWindows) return AvailablePlatform.windows;
   if (isLinux) return AvailablePlatform.linux;
   if (isFuchsia) return AvailablePlatform.fuchsia;
-  // TODO(Alex): think later
+  // Optimize(Alex): think later
   return AvailablePlatform.android;
 }

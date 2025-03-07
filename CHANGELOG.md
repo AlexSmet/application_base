@@ -9,6 +9,7 @@ send sensitive data in logger (instead of private **_sendSensitive** parameter)
 * Error in response will be logged in remote logger with response body despite
 **logSensitive** parameter
 * Network logger functions cleared
+* **ConnectionRestoreMixin** migrated from Presentation layer to Domain
 
 
 ## 0.0.3
