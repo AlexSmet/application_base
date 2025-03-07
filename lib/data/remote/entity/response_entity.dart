@@ -15,4 +15,10 @@ final class ResponseEntity {
 
   ///
   final int statusCode;
+
+  ///
+  bool get isOk => statusCode == 200 || statusCode == 201;
+
+  ///
+  bool get isNotOk => !isOk;
 }
