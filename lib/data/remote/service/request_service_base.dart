@@ -29,7 +29,7 @@ abstract base class RequestServiceBase {
   ///
   final _networkSubject = getIt<NetworkSubject>();
 
-  /// **false** by default
+  /// **isDebug** by default
   set logSensitive(bool newValue) {
     canLogSensitive = newValue;
   }

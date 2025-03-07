@@ -1,9 +1,10 @@
 import 'package:application_base/core/service/logger_service.dart';
+import 'package:application_base/core/service/platform_service.dart';
 import 'package:application_base/data/remote/const/request_type.dart';
 import 'package:http/http.dart';
 
 /// Can send sensitive data to remote logger or not
-bool canLogSensitive = false;
+bool canLogSensitive = isDebug;
 
 /// Logging request information
 void logRequestInfo({
