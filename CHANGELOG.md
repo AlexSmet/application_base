@@ -1,5 +1,6 @@
 ## 0.0.4
 
+* **LifecycleService** is now with **AppLifecycleState** listener
 * **RequestPostWithFile** is now web-compatible but requires XFile instead of 
 local file path
 * In **RequestServiceBase** added parameter **logSensitive** to send or not to
