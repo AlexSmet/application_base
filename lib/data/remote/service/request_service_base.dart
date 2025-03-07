@@ -71,7 +71,7 @@ abstract base class RequestServiceBase {
             headers: headers,
             body: request.body,
           ),
-        RequestPostWithFile() => _sendPostForm(
+        RequestPostWithFiles() => _sendPostForm(
             uri,
             headers: headers,
             requestData: request,
@@ -180,7 +180,7 @@ abstract base class RequestServiceBase {
   Future<Response> _sendPostForm(
     Uri url, {
     required Map<String, String> headers,
-    required RequestPostWithFile requestData,
+    required RequestPostWithFiles requestData,
   }) async {
     /// Prepearing request
     final request = MultipartRequest('POST', url);
