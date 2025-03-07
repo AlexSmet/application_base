@@ -1,3 +1,7 @@
+## 0.0.5
+
+* Response + RawDataEntity = ResponseEntity
+
 ## 0.0.4
 
 * **LifecycleService** is now with **AppLifecycleState** listener

@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'package:application_base/core/service/platform_service.dart';
 import 'package:application_base/core/service/service_locator.dart';
 import 'package:application_base/data/remote/const/request_type.dart';
+import 'package:application_base/data/remote/entity/response_entity.dart';
 import 'package:application_base/data/remote/service/network_logger_service.dart';
 import 'package:application_base/data/remote/service/request_timeout_service.dart';
 import 'package:application_base/domain/subject/network_subject.dart';
@@ -52,7 +53,7 @@ abstract base class RequestServiceBase {
   /// special in this case.
   ///
   /// Otherwise return **Response** with necessary information.
-  Future<Response?> sendBase({
+  Future<ResponseEntity?> sendBase({
     required RequestType request,
     required Map<String, String> headers,
   }) async {
@@ -95,16 +96,23 @@ abstract base class RequestServiceBase {
           ),
       };
 
-      /// Send response
-      final Response response = await futureResponse
+      /// Send request
+      final Response httpResponse = await futureResponse
           .timeout(RequestTimeoutService.timeout(request.durationType));
 
-      /// Check it
-      if (!request.expectedStatusList.contains(response.statusCode)) {
-        /// Some error happened, log it
-        logResponseError(request: request, response: response);
+      /// Get response
+      final response = ResponseEntity(
+        request: 'Request ${request.type} $uri',
+        body: httpResponse.body,
+        statusCode: httpResponse.statusCode,
+      );
 
-        if (response.statusCode == HttpStatus.unauthorized) {
+      /// Check it
+      if (!request.expectedStatusList.contains(httpResponse.statusCode)) {
+        /// Some error happened, log it
+        logResponseError(response: response);
+
+        if (httpResponse.statusCode == HttpStatus.unauthorized) {
           // To apply custom behaviour on unathorized response (for example to
           // refresh access token) add unauthorized status code to
           // expectedStatusList and check response manually (do not forget to
@@ -112,14 +120,14 @@ abstract base class RequestServiceBase {
           notifyUnauthorized();
           return null;
         }
-        if (response.statusCode == HttpStatus.gatewayTimeout) {
+        if (httpResponse.statusCode == HttpStatus.gatewayTimeout) {
           _notify(NetworkConnectionLost());
           return null;
         }
 
         /// Try to get expected error type
         final NetworkEvent? expectedErrorType =
-            request.expectedErrorMap[response.statusCode];
+            request.expectedErrorMap[httpResponse.statusCode];
         if (expectedErrorType != null) {
           /// Custom handler
           _notify(expectedErrorType, silence: request.silence);
@@ -132,7 +140,7 @@ abstract base class RequestServiceBase {
       }
 
       /// Expected response, just log it, notify and return
-      logResponseInfo(request: request, response: response);
+      logResponseInfo(response: response);
       _notify(NetworkSuccess(), silence: request.silence);
       return response;
     } on TimeoutException {

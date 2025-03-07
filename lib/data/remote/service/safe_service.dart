@@ -1,18 +1,19 @@
 import 'dart:convert';
 
-import 'package:application_base/data/remote/entity/raw_data_entity.dart';
+import 'package:application_base/data/remote/entity/response_entity.dart';
 import 'package:application_base/data/remote/service/network_logger_service.dart';
 
 /// Methods for safe work with entities
 abstract final class SafeService {
   /// Safe parse JSON with list from string
   static List<Type> parseList<Type>(
-    RawDataEntity rawData,
+    ResponseEntity data,
     Type Function(Map<String, dynamic> json) parseFunction,
   ) {
-    if (rawData.data.isEmpty) return [];
+    if (data.body.isEmpty) return [];
+
     try {
-      final Object decodedData = json.decode(rawData.data) as Object;
+      final Object decodedData = json.decode(data.body) as Object;
       if (decodedData is! List) throw Exception('JSON is not a list');
       final List<Type> result = [];
       for (final element in decodedData) {
@@ -20,40 +21,29 @@ abstract final class SafeService {
           result.add(parseFunction(element as Map<String, dynamic>));
         } catch (e) {
           /// Error with one of items in list, log it
-          logJsonParsingError(
-            json: rawData.data,
-            info: e.toString(),
-            source: rawData.source,
-          );
+          logJsonParsingError(data: data, info: e.toString());
         }
       }
       return result;
     } catch (e) {
       /// Log it
-      logJsonParsingError(
-        json: rawData.data,
-        info: e.toString(),
-        source: rawData.source,
-      );
+      logJsonParsingError(data: data, info: e.toString());
     }
     return [];
   }
 
   /// Safe parse JSON from string
   static Type? parse<Type>(
-    RawDataEntity rawData,
+    ResponseEntity data,
     Type Function(Map<String, dynamic> json) parseFunction,
   ) {
-    if (rawData.data.isEmpty) return null;
+    if (data.body.isEmpty) return null;
+
     try {
-      return parseFunction(jsonDecode(rawData.data) as Map<String, dynamic>);
+      return parseFunction(jsonDecode(data.body) as Map<String, dynamic>);
     } catch (e) {
       /// Log it
-      logJsonParsingError(
-        json: rawData.data,
-        info: e.toString(),
-        source: rawData.source,
-      );
+      logJsonParsingError(data: data, info: e.toString());
     }
     return null;
   }
