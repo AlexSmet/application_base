@@ -1,6 +1,7 @@
 ## 0.0.5
 
-* Response + RawDataEntity = ResponseEntity
+* Response + RawDataEntity = **ResponseEntity**
+* **NetworkCustomEvent** added
 
 ## 0.0.4
 
