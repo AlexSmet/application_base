@@ -116,7 +116,7 @@ abstract base class RequestServiceBase {
           return null;
         }
         if (httpResponse.statusCode == HttpStatus.gatewayTimeout) {
-          _notify(NetworkConnectionLost());
+          notify(NetworkConnectionLost());
           return null;
         }
 
@@ -125,23 +125,23 @@ abstract base class RequestServiceBase {
             request.expectedErrorMap[httpResponse.statusCode];
         if (expectedErrorType != null) {
           /// Custom handler
-          _notify(expectedErrorType, silence: request.silence);
+          notify(expectedErrorType, silence: request.silence);
           return null;
         }
 
         /// Handle it as unexpected response
-        _notify(NetworkUnexpectedResponse(), silence: request.silence);
+        notify(NetworkUnexpectedResponse(), silence: request.silence);
         return null;
       }
 
       /// Expected response, just log it, notify and return
       logResponseInfo(response: response);
-      _notify(NetworkSuccess(), silence: request.silence);
+      notify(NetworkSuccess(), silence: request.silence);
       return response;
     } on TimeoutException {
       /// Time is out
       logRequestInfo(request: request, info: 'Timeout exception');
-      _notify(NetworkRequestTimeout(), silence: request.silence);
+      notify(NetworkRequestTimeout(), silence: request.silence);
     } on SocketException catch (error) {
       if (error.message.contains('Failed host lookup')) {
         /// Only on Android, iOS send timeout exception
@@ -149,32 +149,32 @@ abstract base class RequestServiceBase {
         // Information(Alex): По факту здесь должно быть noConnection, но его
         // используем только для включения офлайн режима,
         // тогда как здесь этого делать не нужно
-        _notify(NetworkRequestTimeout(), silence: request.silence);
+        notify(NetworkRequestTimeout(), silence: request.silence);
       } else {
         ///
         logRequestError(
           request: request,
           error: 'Socket exception ${error.message}',
         );
-        _notify(NetworkUnexpectedError(), silence: request.silence);
+        notify(NetworkUnexpectedError(), silence: request.silence);
       }
     } on HandshakeException catch (error) {
       /// SSL problem on backend side, need to activate offline mode
       logRequestError(request: request, error: error.message);
-      _notify(NetworkConnectionLost());
+      notify(NetworkConnectionLost());
     } catch (error) {
       /// Something is crashed
       logRequestError(request: request, error: error.toString());
-      _notify(NetworkUnexpectedError(), silence: request.silence);
+      notify(NetworkUnexpectedError(), silence: request.silence);
     }
     return null;
   }
 
   /// Just notify subjects
-  void notifyUnauthorized() => _notify(NetworkUnauthorized());
+  void notifyUnauthorized() => notify(NetworkUnauthorized());
 
   ///
-  void _notify(NetworkEvent type, {bool silence = false}) {
+  void notify(NetworkEvent type, {bool silence = false}) {
     if (silence) return;
     _networkSubject.add(type);
   }
