@@ -54,3 +54,9 @@ final class NetworkUnexpectedError extends NetworkEvent {
   ///
   NetworkUnexpectedError({super.data});
 }
+
+///
+final class NetworkCustomEvent extends NetworkEvent {
+  ///
+  NetworkCustomEvent({super.data});
+}

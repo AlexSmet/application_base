@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'package:application_base/core/service/platform_service.dart';
 import 'package:application_base/core/service/service_locator.dart';
 import 'package:application_base/data/remote/const/request_type.dart';
+import 'package:application_base/data/remote/entity/response_entity.dart';
 import 'package:application_base/data/remote/service/network_logger_service.dart';
 import 'package:application_base/data/remote/service/request_timeout_service.dart';
 import 'package:application_base/domain/subject/network_subject.dart';
@@ -24,7 +25,10 @@ abstract base class RequestServiceBase {
   // перезапроса в случае ошибок https://pub.dev/packages/http#retrying-requests
   // Настроить обработку ошибок - как минимум исключить 401.
   /// https://dart.dev/tutorials/server/fetch-data#make-multiple-requests
-  final _client = Client();
+  Client _client = Client();
+
+  ///
+  set client(Client newValue) => _client = newValue;
 
   ///
   final _networkSubject = getIt<NetworkSubject>();
@@ -38,21 +42,13 @@ abstract base class RequestServiceBase {
   @mustBeOverridden
   Uri prepareUri({required String path});
 
-  // TODO(Alex): Преобразовать RawDataEntity в ResponseEntity и возвращать его
-  // вместо Response. ResponseEntity будет независеть от текущего используемого
-  // пакета (пока это http, в дальнейшем может быть мигрируем на dio или
-  // добавим со временем что-то альтернативное, типа GraphQL) и содержать все
-  // нужные данные (пока это только код и тело, в дальнейшем может ещё что
-  // понадобится, сможем докинуть без потери обратной совместимости,
-  // просто расширив класс)
-  ///
   /// Return **null** only if got error with unified application behaviour
   /// via **errorSubject** stream (for example - `no connection` or
   /// `need authorization` errors), so it's not necessary to do something
   /// special in this case.
   ///
   /// Otherwise return **Response** with necessary information.
-  Future<Response?> sendBase({
+  Future<ResponseEntity?> sendBase({
     required RequestType request,
     required Map<String, String> headers,
   }) async {
@@ -78,7 +74,7 @@ abstract base class RequestServiceBase {
             headers: headers,
             body: request.body,
           ),
-        RequestPostWithFile() => _sendPostForm(
+        RequestPostWithFiles() => _sendPostForm(
             uri,
             headers: headers,
             requestData: request,
@@ -95,16 +91,23 @@ abstract base class RequestServiceBase {
           ),
       };
 
-      /// Send response
-      final Response response = await futureResponse
+      /// Send request
+      final Response httpResponse = await futureResponse
           .timeout(RequestTimeoutService.timeout(request.durationType));
 
-      /// Check it
-      if (!request.expectedStatusList.contains(response.statusCode)) {
-        /// Some error happened, log it
-        logResponseError(request: request, response: response);
+      /// Get response
+      final response = ResponseEntity(
+        request: 'Request ${request.type} $uri',
+        body: httpResponse.body,
+        statusCode: httpResponse.statusCode,
+      );
 
-        if (response.statusCode == HttpStatus.unauthorized) {
+      /// Check it
+      if (!request.expectedStatusList.contains(httpResponse.statusCode)) {
+        /// Some error happened, log it
+        logResponseError(response: response);
+
+        if (httpResponse.statusCode == HttpStatus.unauthorized) {
           // To apply custom behaviour on unathorized response (for example to
           // refresh access token) add unauthorized status code to
           // expectedStatusList and check response manually (do not forget to
@@ -112,33 +115,33 @@ abstract base class RequestServiceBase {
           notifyUnauthorized();
           return null;
         }
-        if (response.statusCode == HttpStatus.gatewayTimeout) {
-          _notify(NetworkConnectionLost());
+        if (httpResponse.statusCode == HttpStatus.gatewayTimeout) {
+          notify(NetworkConnectionLost());
           return null;
         }
 
         /// Try to get expected error type
         final NetworkEvent? expectedErrorType =
-            request.expectedErrorMap[response.statusCode];
+            request.expectedErrorMap[httpResponse.statusCode];
         if (expectedErrorType != null) {
           /// Custom handler
-          _notify(expectedErrorType, silence: request.silence);
+          notify(expectedErrorType, silence: request.silence);
           return null;
         }
 
         /// Handle it as unexpected response
-        _notify(NetworkUnexpectedResponse(), silence: request.silence);
+        notify(NetworkUnexpectedResponse(), silence: request.silence);
         return null;
       }
 
       /// Expected response, just log it, notify and return
-      logResponseInfo(request: request, response: response);
-      _notify(NetworkSuccess(), silence: request.silence);
+      logResponseInfo(response: response);
+      notify(NetworkSuccess(), silence: request.silence);
       return response;
     } on TimeoutException {
       /// Time is out
       logRequestInfo(request: request, info: 'Timeout exception');
-      _notify(NetworkRequestTimeout(), silence: request.silence);
+      notify(NetworkRequestTimeout(), silence: request.silence);
     } on SocketException catch (error) {
       if (error.message.contains('Failed host lookup')) {
         /// Only on Android, iOS send timeout exception
@@ -146,32 +149,32 @@ abstract base class RequestServiceBase {
         // Information(Alex): По факту здесь должно быть noConnection, но его
         // используем только для включения офлайн режима,
         // тогда как здесь этого делать не нужно
-        _notify(NetworkRequestTimeout(), silence: request.silence);
+        notify(NetworkRequestTimeout(), silence: request.silence);
       } else {
         ///
         logRequestError(
           request: request,
           error: 'Socket exception ${error.message}',
         );
-        _notify(NetworkUnexpectedError(), silence: request.silence);
+        notify(NetworkUnexpectedError(), silence: request.silence);
       }
     } on HandshakeException catch (error) {
       /// SSL problem on backend side, need to activate offline mode
       logRequestError(request: request, error: error.message);
-      _notify(NetworkConnectionLost());
+      notify(NetworkConnectionLost());
     } catch (error) {
       /// Something is crashed
       logRequestError(request: request, error: error.toString());
-      _notify(NetworkUnexpectedError(), silence: request.silence);
+      notify(NetworkUnexpectedError(), silence: request.silence);
     }
     return null;
   }
 
   /// Just notify subjects
-  void notifyUnauthorized() => _notify(NetworkUnauthorized());
+  void notifyUnauthorized() => notify(NetworkUnauthorized());
 
   ///
-  void _notify(NetworkEvent type, {bool silence = false}) {
+  void notify(NetworkEvent type, {bool silence = false}) {
     if (silence) return;
     _networkSubject.add(type);
   }
@@ -180,7 +183,7 @@ abstract base class RequestServiceBase {
   Future<Response> _sendPostForm(
     Uri url, {
     required Map<String, String> headers,
-    required RequestPostWithFile requestData,
+    required RequestPostWithFiles requestData,
   }) async {
     /// Prepearing request
     final request = MultipartRequest('POST', url);
