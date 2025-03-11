@@ -29,7 +29,7 @@ sealed class RequestType {
   List<int> expectedStatusList;
 
   /// Expected response pair `HTTP status -> Network event` map in API endpoint
-  final Map<int, NetworkEvent> expectedErrorMap;
+  Map<int, NetworkEvent> expectedErrorMap;
 
   /// Do not show error on silence mode
   final bool silence;
