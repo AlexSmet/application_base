@@ -32,7 +32,7 @@ For now includes:
 * iOS
 * Linux - not tested yet
 * MacOS - not tested yet
-* Web - with some issues on API interactions via http
+* Web
 * Windows - not tested yet
 
 ## Requirements 
