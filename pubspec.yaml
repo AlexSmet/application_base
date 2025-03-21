@@ -4,16 +4,17 @@ version: 0.0.5
 homepage: https://github.com/AlexSeednov/application_base
 
 environment:
-  sdk: '>=3.4.0 <4.0.0'
-  flutter: ">=3.22.0"
+  # Flutter SDK supported versions
+  flutter: '3.29.2'
+
+  # Dart SDK supported versions
+  sdk: '>=3.7.2 <4.0.0'
 
 dependencies:
   # https://pub.dev/packages/auto_route
   #
   # All platform supported
-  #
-  # Versions 9.2.2+ requires flutter 3.24.0+
-  auto_route: ^9.2.2
+  auto_route: ^10.0.1
 
   # https://pub.dev/packages/connectivity_plus
   #
@@ -47,9 +48,7 @@ dependencies:
   # https://pub.dev/packages/meta
   #
   # All platform supported
-  #
-  # flutter_test depends on meta 1.12.0
-  meta: ^1.12.0
+  meta: ^1.16.0
 
   # https://pub.dev/packages/rxdart
   #
