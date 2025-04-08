@@ -48,7 +48,7 @@ dependencies:
   # https://pub.dev/packages/hive_ce
   #
   # All platform supported
-  hive_ce: 2.10.1
+  hive_ce: ^2.10.1
 
   # https://pub.dev/packages/hive_ce_flutter
   #
@@ -60,7 +60,7 @@ dependencies:
   # Pre-register ColorAdapter & TimeOfDayAdapter with typeId 200 & 201
   # which already in use in local data. Will be fixed in next release.
   # hive_ce_flutter: 2.1.0
-  hive_ce_flutter: 1.2.0
+  hive_ce_flutter: ^1.2.0
 
   # https://pub.dev/packages/http
   #

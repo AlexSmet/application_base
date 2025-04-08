@@ -436,7 +436,17 @@ and [hive_ce](https://pub.dev/packages/hive_ce)
 
 Set dependency in `pubspec.yaml`
 
-tbd
+```
+dependencies:
+  ...
+  hive_ce: 2.10.1
+  hive_ce_flutter: 1.2.0  
+  ...
+dev_dependencies:
+  ...
+  hive_ce_generator: 1.8.1
+  ...
+```
 
 Generate all adapters (more information 
 [here](https://pub.dev/packages/hive_ce#store-objects))
