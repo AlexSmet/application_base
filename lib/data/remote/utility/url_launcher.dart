@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 abstract final class UrlLauncher {
   /// Check and try to open a link.
   /// Return **true** on success
-  static Future<bool> lauchLink(
+  static Future<bool> launchLink(
     String? link, {
     LaunchMode mode = LaunchMode.externalApplication,
   }) async {
@@ -46,6 +46,6 @@ abstract final class UrlLauncher {
     final String fixedBody =
         body.replaceAll('\n', '%0D%0A').replaceAll(' ', '%20');
     final String link = 'mailto:$to?subject=$title&body=$fixedBody';
-    return lauchLink(link);
+    return launchLink(link);
   }
 }
