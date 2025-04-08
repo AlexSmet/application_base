@@ -29,7 +29,7 @@ dependencies:
   # https://pub.dev/packages/cross_file
   #
   # All platform supported
-  cross_file: 0.3.4+2
+  cross_file: ^0.3.4+2
 
   # Base SDK
   flutter:
@@ -38,7 +38,7 @@ dependencies:
   # https://pub.dev/packages/flutter_secure_storage
   #
   # All platform supported
-  flutter_secure_storage: 9.2.4
+  flutter_secure_storage: ^9.2.4
 
   # https://pub.dev/packages/get_it
   #
@@ -84,6 +84,11 @@ dependencies:
   #
   # All platform supported
   rxdart: ^0.28.0
+
+  # https://pub.dev/packages/url_launcher
+  #
+  # All platform supported
+  url_launcher: ^6.3.1
 
 #
 dev_dependencies:
