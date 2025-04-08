@@ -1,3 +1,8 @@
+## 0.0.6
+
+* Flutter upgraded to 3.24.5
+* Dependencies update
+
 ## 0.0.5
 
 * Response + RawDataEntity = **ResponseEntity**
@@ -16,7 +21,6 @@ send sensitive data in logger (instead of private **_sendSensitive** parameter)
 **logSensitive** parameter
 * Network logger functions cleared
 * **ConnectionRestoreMixin** migrated from Presentation layer to Domain
-
 
 ## 0.0.3
 
