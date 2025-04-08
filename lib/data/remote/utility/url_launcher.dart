@@ -37,7 +37,7 @@ abstract final class UrlLauncher {
 
   /// Try to open email application with prepeared email.
   /// Return **true** on success
-  Future<bool> sendEmail({
+  static Future<bool> sendEmail({
     required String to,
     required String title,
     required String body,
