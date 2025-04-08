@@ -1,3 +1,10 @@
+## 0.0.7
+
+* **StorageService** based on 
+[flutter_secure_storage](https://pub.dev/packages/flutter_secure_storage) 
+and [hive_ce](https://pub.dev/packages/hive_ce)
+* **LoggingMixin** added
+
 ## 0.0.6
 
 * Flutter upgraded to 3.24.5
@@ -33,8 +40,8 @@ send sensitive data in logger (instead of private **_sendSensitive** parameter)
 
 ## 0.0.1
 
-* Analysis options
-* Flavors
-* GetIt based on [get_it](https://pub.dev/packages/get_it)
-* Logger based on [Logger](https://pub.dev/packages/logger)
-* Navigation utilities based on [AutoRoute](https://pub.dev/packages/auto_route)
+* **Analysis options**
+* **Flavors**
+* **GetIt** based on [get_it](https://pub.dev/packages/get_it)
+* **Logger** based on [Logger](https://pub.dev/packages/logger)
+* **Navigation utilities** based on [AutoRoute](https://pub.dev/packages/auto_route)
