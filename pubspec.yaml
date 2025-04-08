@@ -19,7 +19,7 @@ dependencies:
   # Depends on auto_route_generator 10.0.0+
   # which depends on newer Dart version
   # auto_route: ^10.0.1
-  auto_route: 9.3.0+1  
+  auto_route: ^9.3.0+1  
 
   # https://pub.dev/packages/connectivity_plus
   #
@@ -56,7 +56,7 @@ dependencies:
   #
   # New Flutter version required
   # meta: ^1.16.0
-  meta: 1.15.0
+  meta: ^1.15.0
 
   # https://pub.dev/packages/rxdart
   #
