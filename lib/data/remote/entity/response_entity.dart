@@ -16,9 +16,10 @@ final class ResponseEntity {
   ///
   final int statusCode;
 
-  ///
+  /// Success status code - for now it's 200 & 201.
+  /// Maybe it's better to use here all 2xx codes
   bool get isOk => statusCode == 200 || statusCode == 201;
 
-  ///
+  /// Not success status code - for now it's every code except 200 & 201
   bool get isNotOk => !isOk;
 }
