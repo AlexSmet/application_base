@@ -467,7 +467,7 @@ Two functions to try to launch a link and send an email based on
 
 ```dart
 final bool linkResult = await UrlLauncher.lauchLink('https:\\link');
-final bool linkResult = await UrlLauncher.launchSendMail(
+final bool emailResult = await UrlLauncher.launchSendMail(
       to: 'smth@email.com',
       title: 'Awesome email',
       body: 'Strong email body!',
