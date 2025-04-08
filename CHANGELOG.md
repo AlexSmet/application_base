@@ -3,6 +3,7 @@
 * **StorageService** based on 
 [flutter_secure_storage](https://pub.dev/packages/flutter_secure_storage) 
 and [hive_ce](https://pub.dev/packages/hive_ce)
+* **UrlLauncher** based on [url_launcher](https://pub.dev/packages/url_launcher)
 * **LoggingMixin** added
 
 ## 0.0.6
