@@ -209,7 +209,7 @@ final class SomeService with LoggingMixin {
 
     /// or
 
-    logNamedError(info: 'broken'); // Will log `Some Service: broken`
+    logNamedError(error: 'broken'); // Will log `Some Service: broken`
   }
 }
 ```
