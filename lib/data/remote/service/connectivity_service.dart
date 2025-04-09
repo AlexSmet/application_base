@@ -5,8 +5,6 @@ import 'package:application_base/core/service/service_locator.dart';
 import 'package:application_base/domain/subject/network_subject.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
-/// Singleton
-///
 /// Connectivity changes are no longer communicated to Android apps
 /// in the background starting with Android O (8.0).
 /// You should always check for connectivity status when your app is resumed.
@@ -15,6 +13,15 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 /// On iOS simulators, the connectivity types stream might not update
 /// when Wi-Fi status changes.
 final class ConnectivityService {
+  ///
+  ConnectivityService._();
+
+  ///
+  factory ConnectivityService.singleton() => _instance;
+
+  ///
+  static final _instance = ConnectivityService._();
+
   ///
   final _connectionSubject = getIt<NetworkSubject>();
 

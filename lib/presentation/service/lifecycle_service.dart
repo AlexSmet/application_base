@@ -6,8 +6,17 @@ import 'package:application_base/data/remote/service/connectivity_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
 
-/// Singleton
+///
 final class LifecycleService {
+  ///
+  LifecycleService._();
+
+  ///
+  factory LifecycleService.singleton() => _instance;
+
+  ///
+  static final _instance = LifecycleService._();
+
   ///
   final _connectivityService = getIt<ConnectivityService>();
 

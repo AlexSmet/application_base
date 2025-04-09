@@ -1,3 +1,4 @@
+import 'package:application_base/data/local/service/storage_service.dart';
 import 'package:application_base/data/remote/service/connectivity_service.dart';
 import 'package:application_base/domain/subject/network_subject.dart';
 import 'package:application_base/presentation/service/lifecycle_service.dart';
@@ -14,19 +15,24 @@ abstract final class ServiceLocatorBase {
 
       /// Data layer
       ..registerLazySingleton<ConnectivityService>(
-        ConnectivityService.new,
+        ConnectivityService.singleton,
         dispose: (service) => service.dispose(),
       )
       ..registerLazySingleton<NetworkSubject>(
-        NetworkSubject.new,
+        NetworkSubject.singleton,
         dispose: (service) => service.dispose(),
+      )
+      ..registerLazySingleton<StorageService>(
+        StorageService.singleton,
       )
 
       /// Presentation layer
       ..registerLazySingleton<LifecycleService>(
-        LifecycleService.new,
+        LifecycleService.singleton,
         dispose: (service) => service.dispose(),
       )
-      ..registerLazySingleton<AccessVM>(AccessVM.new);
+      ..registerLazySingleton<AccessVM>(
+        AccessVM.singleton,
+      );
   }
 }

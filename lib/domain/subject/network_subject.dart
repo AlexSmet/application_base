@@ -5,8 +5,17 @@ import 'package:rxdart/rxdart.dart';
 
 export 'package:application_base/data/remote/const/network_event.dart';
 
-/// Singleton
+///
 final class NetworkSubject {
+  ///
+  NetworkSubject._();
+
+  ///
+  factory NetworkSubject.singleton() => _instance;
+
+  ///
+  static final _instance = NetworkSubject._();
+
   ///
   final _networkSubject = PublishSubject<NetworkEvent>();
 
