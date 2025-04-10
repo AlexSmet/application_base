@@ -48,4 +48,12 @@ abstract final class UrlLauncher {
     final String link = 'mailto:$to?subject=$title&body=$fixedBody';
     return launchLink(link);
   }
+
+  /// Try to make a call via phone application.
+  /// Return **true** on success
+  static Future<bool> makeCall(String number) => launchLink('tel:$number!');
+
+  /// Try to send an sms via message application.
+  /// Return **true** on success
+  static Future<bool> sendSms(String text) => launchLink('sms:?body=$text');
 }
