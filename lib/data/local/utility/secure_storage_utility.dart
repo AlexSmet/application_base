@@ -30,13 +30,13 @@ abstract final class SecureStorageUtility {
   ///
   /// If cipher key is not exists it will be generated
   static Future<Uint8List> _readCipherKey({required String key}) async {
-    const FlutterSecureStorage secureStorage = FlutterSecureStorage(
+    const secureStorage = FlutterSecureStorage(
       aOptions: _secureStorageOptions,
     );
 
     String? encryptedKey = await secureStorage.read(key: key);
-
     if (encryptedKey == null) {
+      /// Generate a new one
       final List<int> newEncryptedKey = Hive.generateSecureKey();
       await secureStorage.write(
         key: key,
