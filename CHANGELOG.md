@@ -1,6 +1,7 @@
 ## 0.0.8
 
 * **PATCH** request type added
+* Success response HTTP status code is now from 200 to 300, not only 200 and 201
 
 ## 0.0.7
 
