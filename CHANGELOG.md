@@ -1,3 +1,7 @@
+## 0.0.8
+
+* **PATCH** request type added
+
 ## 0.0.7
 
 * **StorageService** based on 
