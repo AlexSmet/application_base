@@ -109,6 +109,23 @@ final class RequestPut extends RequestType {
 }
 
 ///
+final class RequestPatch extends RequestType {
+  ///
+  RequestPatch({
+    required super.path,
+    this.body,
+    super.expectedStatusList = const [HttpStatus.ok],
+    super.expectedErrorMap = const {},
+    super.silence = false,
+    super.durationType = RequestDurationType.normal,
+  }) : super(type: 'PATCH');
+
+  /// Body for request
+  @override
+  final String? body;
+}
+
+///
 final class RequestDelete extends RequestType {
   ///
   RequestDelete({

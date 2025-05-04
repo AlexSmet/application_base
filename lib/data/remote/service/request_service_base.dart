@@ -84,6 +84,11 @@ abstract base class RequestServiceBase {
             headers: headers,
             body: request.body,
           ),
+        RequestPatch() => _client.patch(
+            uri,
+            headers: headers,
+            body: request.body,
+          ),
         RequestDelete() => _client.delete(
             uri,
             headers: headers,
