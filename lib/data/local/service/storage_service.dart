@@ -42,6 +42,7 @@ final class StorageService with LoggingMixin {
     /// Prepare storage cipher
     _cipher = await SecureStorageUtility.getCipher(key: cipherKey);
 
+    logNamedInfo(info: 'prepared');
     _isReady = true;
   }
 
