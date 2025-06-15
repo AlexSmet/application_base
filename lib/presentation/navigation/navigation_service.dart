@@ -28,7 +28,7 @@ void unfocus() => FocusManager.instance.primaryFocus?.unfocus();
 /// Pop all routes and push default '/' route
 void openDefaultScreen() => router
   ..popUntilRoot()
-  ..replaceNamed('/');
+  ..replacePath('/');
 
 /// Adds a new entry to the screens stack
 /// Can not return some value because of Future<smth> doesn't work with await...
@@ -37,14 +37,14 @@ Future<void> pushScreen({required PageRouteInfo<dynamic> route}) =>
 
 /// Adds a new entry to the screens stack by using path
 Future<void> pushNamed({required String routeName}) =>
-    router.pushNamed(routeName);
+    router.pushPath(routeName);
 
 /// Pops the last screen unless stack has one entry
 Future<void> popScreen({bool? result}) => router.maybePop(result);
 
 /// Pop current route regardless if it's the last route in stack
 /// or the result of it's
-void popScreenForced({bool? result}) => router.popForced(result);
+void popScreenForced({bool? result}) => router.pop(result);
 
 /// Keeps popping routes until route with provided path is found
 void popUntilScreenWithName({required String routeName}) =>

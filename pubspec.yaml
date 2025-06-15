@@ -5,29 +5,20 @@ homepage: https://github.com/AlexSeednov/application_base
 
 environment:
   # Flutter SDK supported versions
-  flutter: '>=3.24.5'
+  flutter: '>=3.32.2'  
 
   # Dart SDK supported versions
   # https://docs.flutter.dev/release/archive
-  sdk: '>=3.5.4'
+  sdk: '>=3.8.1'
 
+# Last update - 15.06.2025
 dependencies:
-  # https://pub.dev/packages/auto_route
-  #
   # All platform supported
-  #
-  # Depends on auto_route_generator 10.0.0+
-  # which depends on newer Dart version
-  # auto_route: ^10.0.1
-  auto_route: ^9.3.0+1  
+  auto_route: 10.1.0+1
 
-  # https://pub.dev/packages/connectivity_plus
-  #
   # All platform supported
-  connectivity_plus: ^6.1.3
+  connectivity_plus: ^6.1.4
 
-  # https://pub.dev/packages/cross_file
-  #
   # All platform supported
   cross_file: ^0.3.4+2
 
@@ -35,58 +26,30 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # https://pub.dev/packages/flutter_secure_storage
-  #
   # All platform supported
   flutter_secure_storage: ^9.2.4
 
-  # https://pub.dev/packages/get_it
-  #
   # All platform supported
   get_it: ^8.0.3
 
-  # https://pub.dev/packages/hive_ce
-  #
   # All platform supported
-  hive_ce: ^2.10.1
+  hive_ce: ^2.11.3
 
-  # https://pub.dev/packages/hive_ce_flutter
-  #
   # All platform supported
-  #
-  # New Flutter version required
-  # hive_ce_flutter: 2.2.0
-  # 
-  # Pre-register ColorAdapter & TimeOfDayAdapter with typeId 200 & 201
-  # which already in use in local data. Will be fixed in next release.
-  # hive_ce_flutter: 2.1.0
-  hive_ce_flutter: ^1.2.0
+  hive_ce_flutter: ^2.3.1
 
-  # https://pub.dev/packages/http
-  #
   # All platform supported
-  http: ^1.3.0
+  http: ^1.4.0
   
-  # https://pub.dev/packages/logger
-  #
   # All platform supported
   logger: ^2.5.0
 
-  # https://pub.dev/packages/meta
-  #
   # All platform supported
-  #
-  # New Flutter version required
-  # meta: ^1.16.0
-  meta: ^1.15.0
+  meta: ^1.16.0
 
-  # https://pub.dev/packages/rxdart
-  #
   # All platform supported
   rxdart: ^0.28.0
 
-  # https://pub.dev/packages/url_launcher
-  #
   # All platform supported
   url_launcher: ^6.3.1
 
