@@ -40,6 +40,7 @@ Future<void> pushNamed({required String routeName}) =>
     router.pushPath(routeName);
 
 /// Pops the last screen unless stack has one entry
+// Optimize(Alex): пометить как awaitNotRequired с выходом meta 1.17
 Future<void> popScreen({bool? result}) => router.maybePop(result);
 
 /// Pop current route regardless if it's the last route in stack
