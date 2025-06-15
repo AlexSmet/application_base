@@ -18,8 +18,8 @@ and [hive_ce](https://pub.dev/packages/hive_ce)
 
 ## 0.0.6
 
-* Flutter upgraded to 3.24.5
-* Dependencies update
+* Updates minimum supported SDK version to Flutter 3.24.5/Dart 3.5.4
+* Updates dependencies
 
 ## 0.0.5
 
@@ -42,7 +42,7 @@ send sensitive data in logger (instead of private **_sendSensitive** parameter)
 
 ## 0.0.3
 
-* Dependencies update
+* Updates dependencies
 
 ## 0.0.2
 
