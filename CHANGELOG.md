@@ -1,5 +1,6 @@
 ## 0.1.0
 
+* **ShareService** based on [share_plus](https://pub.dev/packages/share_plus)
 * Some unified widgets added
   * EmptyButton
   * UnfocusingTap
