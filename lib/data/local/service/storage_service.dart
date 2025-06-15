@@ -36,7 +36,12 @@ final class StorageService with LoggingMixin {
     }
 
     /// Initialize Hive
-    await Hive.initFlutter();
+    await Hive.initFlutter(
+      null,
+      HiveStorageBackendPreference.native,
+      9998, // colorAdapterTypeId - far-far from real project IDs
+      9999, // timeOfDayAdapterTypeId - far-far from real project IDs
+    );
     registerAdapters();
 
     /// Prepare storage cipher
