@@ -11,7 +11,7 @@ environment:
   # https://docs.flutter.dev/release/archive
   sdk: '>=3.8.1'
 
-# Last update - 15.06.2025
+# Last update - 05.07.2025
 dependencies:
   # All platform supported
   auto_route: 10.1.0+1
@@ -42,10 +42,12 @@ dependencies:
   http: ^1.4.0
   
   # All platform supported
-  logger: ^2.5.0
+  logger: ^2.6.0
 
   # All platform supported
-  meta: ^1.16.0
+  # New Flutter version required
+  # meta: ^1.17.0
+  meta: 1.16.0
 
   # All platform supported
   rxdart: ^0.28.0
