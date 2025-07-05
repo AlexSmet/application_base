@@ -1,6 +1,6 @@
 name: application_base
 description: "Unified base for Flutter applications"
-version: 0.0.8
+version: 0.1.0
 homepage: https://github.com/AlexSeednov/application_base
 
 environment:
@@ -49,6 +49,9 @@ dependencies:
 
   # All platform supported
   rxdart: ^0.28.0
+  
+  # All platform supported
+  share_plus: 11.0.0
 
   # All platform supported
   url_launcher: ^6.3.1

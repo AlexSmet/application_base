@@ -1,3 +1,10 @@
+## 0.1.0
+
+* **ShareService** based on [share_plus](https://pub.dev/packages/share_plus)
+* Some unified widgets added
+  * EmptyButton
+  * UnfocusingTap
+
 ## 0.0.9
 
 * Updates minimum supported SDK version to Flutter 3.32.2/Dart 3.8.1
