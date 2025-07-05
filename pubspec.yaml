@@ -5,7 +5,7 @@ homepage: https://github.com/AlexSeednov/application_base
 
 environment:
   # Flutter SDK supported versions
-  flutter: '>=3.32.2'  
+  flutter: '>=3.32.5'  
 
   # Dart SDK supported versions
   # https://docs.flutter.dev/release/archive

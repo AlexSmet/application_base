@@ -4,6 +4,8 @@
 * Some unified widgets added
   * EmptyButton
   * UnfocusingTap
+* Updates minimum supported SDK version to Flutter 3.32.5/Dart 3.8.1
+* Updates all packages to actual versions
 
 ## 0.0.9
 
