@@ -40,7 +40,7 @@ abstract base class RequestServiceBase {
 
   ///
   @mustBeOverridden
-  Uri prepareUri({required String path});
+  Uri prepareUri({required String path, Map<String, dynamic>? queryParameters});
 
   /// Return **null** only if got error with unified application behaviour
   /// via **errorSubject** stream (for example - `no connection` or
@@ -65,44 +65,38 @@ abstract base class RequestServiceBase {
 
       /// Prepare response
       final Future<Response> futureResponse = switch (request) {
-        RequestGet() => _client.get(
-            uri,
-            headers: headers,
-          ),
+        RequestGet() => _client.get(uri, headers: headers),
         RequestPost() => _client.post(
-            uri,
-            headers: headers,
-            body: request.body,
-          ),
+          uri,
+          headers: headers,
+          body: request.body,
+        ),
         RequestPostWithFiles() => _sendPostForm(
-            uri,
-            headers: headers,
-            requestData: request,
-          ),
-        RequestPut() => _client.put(
-            uri,
-            headers: headers,
-            body: request.body,
-          ),
+          uri,
+          headers: headers,
+          requestData: request,
+        ),
+        RequestPut() => _client.put(uri, headers: headers, body: request.body),
         RequestPatch() => _client.patch(
-            uri,
-            headers: headers,
-            body: request.body,
-          ),
+          uri,
+          headers: headers,
+          body: request.body,
+        ),
         RequestDelete() => _client.delete(
-            uri,
-            headers: headers,
-            body: request.body,
-          ),
+          uri,
+          headers: headers,
+          body: request.body,
+        ),
       };
 
       /// Send request
-      final Response httpResponse = await futureResponse
-          .timeout(RequestTimeoutService.timeout(request.durationType));
+      final Response httpResponse = await futureResponse.timeout(
+        RequestTimeoutService.timeout(request.durationType),
+      );
 
       /// Get response
       final response = ResponseEntity(
-        request: 'Request ${request.type} $uri',
+        request: '${request.type} $uri',
         body: httpResponse.body,
         statusCode: httpResponse.statusCode,
       );
@@ -214,11 +208,7 @@ abstract base class RequestServiceBase {
         /// Web - need to use fromBytes instead of fromPath
         final Uint8List fileBytes = await file.readAsBytes();
         request.files.add(
-          MultipartFile.fromBytes(
-            field,
-            fileBytes,
-            filename: file.name,
-          ),
+          MultipartFile.fromBytes(field, fileBytes, filename: file.name),
         );
       }
     });
