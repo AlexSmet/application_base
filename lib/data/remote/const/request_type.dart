@@ -81,7 +81,7 @@ final class RequestPostFormData extends RequestType {
     super.expectedStatusList = const [HttpStatus.ok],
     super.expectedErrorMap = const {},
     super.silence = false,
-  }) : super(type: 'POST with files');
+  }) : super(type: 'POST form data');
 
   /// Body for request in JSON
   @override
