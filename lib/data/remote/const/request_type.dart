@@ -72,18 +72,18 @@ final class RequestPost extends RequestType {
 }
 
 ///
-final class RequestPostWithFiles extends RequestType {
+final class RequestPostFormData extends RequestType {
   ///
-  RequestPostWithFiles({
+  RequestPostFormData({
     required super.path,
-    required this.files,
     this.body,
+    this.files = const {},
     super.expectedStatusList = const [HttpStatus.ok],
     super.expectedErrorMap = const {},
     super.silence = false,
   }) : super(type: 'POST with files');
 
-  /// Body for request
+  /// Body for request in JSON
   @override
   final Map<String, String>? body;
 

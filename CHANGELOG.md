@@ -1,3 +1,10 @@
+## 0.1.1
+
+Breaking changes:
+
+* **logSensitive** renamed to **canLogSensitiveData** and improved
+* **RequestPostWithFiles** renamed to **RequestPostFormData** and improved
+
 ## 0.1.0
 
 * **ShareService** based on [share_plus](https://pub.dev/packages/share_plus)

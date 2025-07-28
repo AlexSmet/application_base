@@ -33,11 +33,6 @@ abstract base class RequestServiceBase {
   ///
   final _networkSubject = getIt<NetworkSubject>();
 
-  /// **isDebug** by default
-  set logSensitive(bool newValue) {
-    canLogSensitive = newValue;
-  }
-
   ///
   @mustBeOverridden
   Uri prepareUri({required String path});
@@ -65,40 +60,34 @@ abstract base class RequestServiceBase {
 
       /// Prepare response
       final Future<Response> futureResponse = switch (request) {
-        RequestGet() => _client.get(
-            uri,
-            headers: headers,
-          ),
+        RequestGet() => _client.get(uri, headers: headers),
         RequestPost() => _client.post(
-            uri,
-            headers: headers,
-            body: request.body,
-          ),
-        RequestPostWithFiles() => _sendPostForm(
-            uri,
-            headers: headers,
-            requestData: request,
-          ),
-        RequestPut() => _client.put(
-            uri,
-            headers: headers,
-            body: request.body,
-          ),
+          uri,
+          headers: headers,
+          body: request.body,
+        ),
+        RequestPostFormData() => _sendPostFormData(
+          uri,
+          headers: headers,
+          requestData: request,
+        ),
+        RequestPut() => _client.put(uri, headers: headers, body: request.body),
         RequestPatch() => _client.patch(
-            uri,
-            headers: headers,
-            body: request.body,
-          ),
+          uri,
+          headers: headers,
+          body: request.body,
+        ),
         RequestDelete() => _client.delete(
-            uri,
-            headers: headers,
-            body: request.body,
-          ),
+          uri,
+          headers: headers,
+          body: request.body,
+        ),
       };
 
       /// Send request
-      final Response httpResponse = await futureResponse
-          .timeout(RequestTimeoutService.timeout(request.durationType));
+      final Response httpResponse = await futureResponse.timeout(
+        RequestTimeoutService.timeout(request.durationType),
+      );
 
       /// Get response
       final response = ResponseEntity(
@@ -185,10 +174,10 @@ abstract base class RequestServiceBase {
   }
 
   ///
-  Future<Response> _sendPostForm(
+  Future<Response> _sendPostFormData(
     Uri url, {
     required Map<String, String> headers,
-    required RequestPostWithFiles requestData,
+    required RequestPostFormData requestData,
   }) async {
     /// Prepearing request
     final request = MultipartRequest('POST', url);
@@ -214,11 +203,7 @@ abstract base class RequestServiceBase {
         /// Web - need to use fromBytes instead of fromPath
         final Uint8List fileBytes = await file.readAsBytes();
         request.files.add(
-          MultipartFile.fromBytes(
-            field,
-            fileBytes,
-            filename: file.name,
-          ),
+          MultipartFile.fromBytes(field, fileBytes, filename: file.name),
         );
       }
     });
