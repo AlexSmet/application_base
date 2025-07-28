@@ -183,7 +183,11 @@ abstract base class RequestServiceBase {
     final request = MultipartRequest('POST', url);
 
     /// Add body data
-    if (requestData.body != null) request.fields.addAll(requestData.body!);
+    if (requestData.body != null) {
+      request.fields.addAll(
+        requestData.body!.map((key, value) => MapEntry(key, value.toString())),
+      );
+    }
 
     /// Add headers
     request.headers.addAll(headers);

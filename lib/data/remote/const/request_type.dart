@@ -85,7 +85,7 @@ final class RequestPostFormData extends RequestType {
 
   /// Body for request in JSON
   @override
-  final Map<String, String>? body;
+  final Map<String, dynamic>? body;
 
   /// Field name and path to local file
   final Map<String, XFile> files;
