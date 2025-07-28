@@ -184,8 +184,22 @@ abstract base class RequestServiceBase {
 
     /// Add body data
     if (requestData.body != null) {
+      Iterable<MapEntry<String, dynamic>> entries;
+
+      if (requestData.ignoreNullFields) {
+        entries = requestData.body!.entries.where(
+          (entry) => entry.value != null,
+        );
+      } else {
+        entries = requestData.body!.entries;
+      }
       request.fields.addAll(
-        requestData.body!.map((key, value) => MapEntry(key, value.toString())),
+        entries
+            .map((entry) => MapEntry(entry.key, entry.value.toString()))
+            .fold<Map<String, String>>(
+              {},
+              (previous, current) => previous..[current.key] = current.value,
+            ),
       );
     }
 

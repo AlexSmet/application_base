@@ -78,6 +78,7 @@ final class RequestPostFormData extends RequestType {
     required super.path,
     this.body,
     this.files = const {},
+    this.ignoreNullFields = true,
     super.expectedStatusList = const [HttpStatus.ok],
     super.expectedErrorMap = const {},
     super.silence = false,
@@ -86,6 +87,9 @@ final class RequestPostFormData extends RequestType {
   /// Body for request in JSON
   @override
   final Map<String, dynamic>? body;
+
+  ///
+  final bool ignoreNullFields;
 
   /// Field name and path to local file
   final Map<String, XFile> files;
