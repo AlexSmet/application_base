@@ -1,6 +1,9 @@
 ## 0.1.1
 
-* **canLogSensitiveData** renamed and improved
+Breaking changes:
+
+* **logSensitive** renamed to **canLogSensitiveData** and improved
+* **RequestPostWithFiles** renamed to **RequestPostFormData** and improved
 
 ## 0.1.0
 
