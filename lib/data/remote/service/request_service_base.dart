@@ -235,7 +235,7 @@ abstract base class RequestServiceBase {
     return Response.fromStream(await request.send());
   }
 
-  /// Mobile only tested!
+  /// Tested on mobile devices only!
   Future<Response> _sendPostFile(
     Uri url, {
     required Map<String, String> headers,
