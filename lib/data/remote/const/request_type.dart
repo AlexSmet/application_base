@@ -104,7 +104,7 @@ final class RequestPostFile extends RequestType {
     super.expectedStatusList = const [HttpStatus.ok],
     super.expectedErrorMap = const {},
     super.silence = false,
-  }) : super(type: 'POST file stream');
+  }) : super(type: 'POST file as binary data');
 
   /// Path to a local file
   final XFile file;
