@@ -106,7 +106,7 @@ final class RequestPostFile extends RequestType {
     super.silence = false,
   }) : super(type: 'POST file stream');
 
-  /// Field name and path to local file
+  /// Path to a local file
   final XFile file;
 
   /// Request have no body
