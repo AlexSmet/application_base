@@ -71,6 +71,11 @@ abstract base class RequestServiceBase {
           headers: headers,
           requestData: request,
         ),
+        RequestPostFile() => _sendPostFile(
+          uri,
+          headers: headers,
+          requestData: request,
+        ),
         RequestPut() => _client.put(uri, headers: headers, body: request.body),
         RequestPatch() => _client.patch(
           uri,
@@ -225,6 +230,32 @@ abstract base class RequestServiceBase {
         );
       }
     });
+
+    /// Sending request
+    return Response.fromStream(await request.send());
+  }
+
+  /// Mobile only tested!
+  Future<Response> _sendPostFile(
+    Uri url, {
+    required Map<String, String> headers,
+    required RequestPostFile requestData,
+  }) async {
+    /// Prepare data
+    final XFile file = requestData.file;
+
+    /// Prepearing request
+    final request = StreamedRequest('POST', url);
+
+    /// Add headers
+    request.headers.addAll(headers);
+    request.headers['Content-Type'] = 'application/octet-stream';
+    request.contentLength = await file.length();
+
+    // Write chunks to request
+    await file.openRead().forEach((chunk) => request.sink.add(chunk));
+    // Close request without awaiting!
+    unawaited(request.sink.close());
 
     /// Sending request
     return Response.fromStream(await request.send());
