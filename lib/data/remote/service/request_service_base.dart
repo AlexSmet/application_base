@@ -235,7 +235,7 @@ abstract base class RequestServiceBase {
     return Response.fromStream(await request.send());
   }
 
-  /// Tested on mobile devices only!
+  // TODO(SH): Tested on mobile devices only, need to test on other platforms
   Future<Response> _sendPostFile(
     Uri url, {
     required Map<String, String> headers,
@@ -252,9 +252,10 @@ abstract base class RequestServiceBase {
     request.headers['Content-Type'] = 'application/octet-stream';
     request.contentLength = await file.length();
 
-    // Write chunks to request
+    /// Write chunks to request
     await file.openRead().forEach((chunk) => request.sink.add(chunk));
-    // Close request without awaiting!
+
+    /// Close sink without awaiting, otherwise request will not be sended
     unawaited(request.sink.close());
 
     /// Sending request
