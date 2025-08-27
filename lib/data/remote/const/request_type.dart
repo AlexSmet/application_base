@@ -95,6 +95,25 @@ final class RequestPostFormData extends RequestType {
   final Map<String, XFile> files;
 }
 
+/// Uploading file as binary data using octet-stream
+final class RequestPostFile extends RequestType {
+  ///
+  RequestPostFile({
+    required super.path,
+    required this.file,
+    super.expectedStatusList = const [HttpStatus.ok],
+    super.expectedErrorMap = const {},
+    super.silence = false,
+  }) : super(type: 'POST file as binary data');
+
+  /// Path to a local file
+  final XFile file;
+
+  /// Request has no body
+  @override
+  Object? get body => null;
+}
+
 ///
 final class RequestPut extends RequestType {
   ///
