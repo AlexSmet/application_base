@@ -1,3 +1,7 @@
+## 0.1.2
+
+* **RequestPostFile** added to uploading file as binary data using octet-stream
+
 ## 0.1.1
 
 Breaking changes:
