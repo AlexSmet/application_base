@@ -109,7 +109,7 @@ final class RequestPostFile extends RequestType {
   /// Path to a local file
   final XFile file;
 
-  /// Request have no body
+  /// Request has no body
   @override
   Object? get body => null;
 }
