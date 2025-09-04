@@ -10,6 +10,7 @@ sealed class RequestType {
   RequestType({
     required this.type,
     required this.path,
+    this.urlParameters,
     this.expectedStatusList = const [HttpStatus.ok],
     this.expectedErrorMap = const {},
     this.silence = false,
@@ -21,6 +22,9 @@ sealed class RequestType {
 
   /// Path for request without address and base API segment
   final String path;
+
+  /// URL params
+  Map<String, String>? urlParameters;
 
   /// Body for request
   Object? get body;
@@ -101,6 +105,7 @@ final class RequestPostFile extends RequestType {
   RequestPostFile({
     required super.path,
     required this.file,
+    super.urlParameters,
     super.expectedStatusList = const [HttpStatus.ok],
     super.expectedErrorMap = const {},
     super.silence = false,
