@@ -49,7 +49,14 @@ abstract base class RequestServiceBase {
   }) async {
     try {
       ///
-      final Uri uri = prepareUri(path: request.path);
+      final Uri uriPathOnly = prepareUri(path: request.path);
+
+      /// Create URL with params
+      final Uri uri = Uri.https(
+        uriPathOnly.host,
+        uriPathOnly.path,
+        request.urlParameters,
+      );
 
       /// Log request
       logRequestInfo(
